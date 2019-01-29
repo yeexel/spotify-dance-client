@@ -1,25 +1,47 @@
-import React, { Component } from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React, { Component } from "react";
+import * as querystring from "query-string";
 
 class App extends Component {
+  state = {
+    loggedIn: false,
+    authToken: ""
+  };
+
+  loginWithSpotify = () => {
+    const child: any = window.open(
+      "http://localhost:5000/login",
+      "top",
+      "location=yes,height=570,width=520,scrollbars=yes,status=yes"
+    );
+
+    // @ts-ignore
+    window.spotifyCallback = token => {
+      child.close();
+      console.log(token);
+      this.setState({
+        loggedIn: true,
+        authToken: token
+      });
+    };
+  };
+
+  componentDidMount() {
+    const parsedQueryString = querystring.parse(window.location.search);
+
+    if (parsedQueryString.auth_token) {
+      window.opener.spotifyCallback(parsedQueryString.auth_token);
+    }
+  }
+
   render() {
+    const { loggedIn, authToken } = this.state;
+
     return (
       <div className="App">
-        <header className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-          <p>
-            Edit <code>src/App.tsx</code> and save to reload.
-          </p>
-          <a
-            className="App-link"
-            href="https://reactjs.org"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Learn React
-          </a>
-        </header>
+        {!loggedIn && (
+          <button onClick={this.loginWithSpotify}>Login with Spotify</button>
+        )}
+        {authToken}
       </div>
     );
   }
