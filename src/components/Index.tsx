@@ -1,4 +1,5 @@
 import * as React from "react";
+import { Link } from "react-router-dom";
 import { withAuthContext } from "../infrastructure/AuthContext";
 
 class Index extends React.Component<any, any> {
@@ -20,6 +21,7 @@ class Index extends React.Component<any, any> {
     return (
       <React.Fragment>
         <div>Dashboard</div>
+        <Link to="/account">Account</Link>
         <button onClick={authContext.logout}>Logout</button>
       </React.Fragment>
     );

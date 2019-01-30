@@ -7,14 +7,20 @@ const ProtectedRoute = ({ component, ...rest }: RouteProps) => {
 
   return (
     <AuthConsumer>
-      {({ isAuth }: any) => (
-        <Route
-          render={props =>
-            isAuth ? <Component {...props} /> : <Redirect to="/" />
-          }
-          {...rest}
-        />
-      )}
+      {({ isAuth, isLoading }: any) => {
+        return (
+          <Route
+            render={props => {
+              if (isLoading) {
+                // add spinner
+                return null;
+              }
+              return isAuth ? <Component {...props} /> : <Redirect to="/" />;
+            }}
+            {...rest}
+          />
+        );
+      }}
     </AuthConsumer>
   );
 };

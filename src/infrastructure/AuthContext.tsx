@@ -6,6 +6,7 @@ interface Props {}
 interface State {
   isAuth: boolean;
   authToken: string;
+  isLoading: boolean;
 }
 
 type Omit<T, K extends keyof T> = Pick<T, Exclude<keyof T, K>>;
@@ -19,6 +20,7 @@ const AuthContext = React.createContext({});
 class AuthProvider extends React.Component<Props, State> {
   state = {
     isAuth: false,
+    isLoading: true,
     authToken: ""
   };
 
@@ -29,7 +31,9 @@ class AuthProvider extends React.Component<Props, State> {
 
     if (authToken) {
       console.log("AuthProvider::setAuthTokenFromComponentDidMount");
-      this.setState({ isAuth: true, authToken });
+      this.setState({ isAuth: true, authToken, isLoading: false });
+    } else {
+      this.setState({ isLoading: false });
     }
   }
 
@@ -49,6 +53,7 @@ class AuthProvider extends React.Component<Props, State> {
       window.localStorage.setItem(LS_KEY, authToken);
       this.setState({
         isAuth: true,
+        isLoading: false,
         authToken
       });
     };
@@ -69,17 +74,18 @@ class AuthProvider extends React.Component<Props, State> {
       window.localStorage.removeItem(LS_KEY);
     }
 
-    this.setState({ isAuth: false, authToken: "" });
+    this.setState({ isAuth: false, authToken: "", isLoading: false });
   };
 
   render() {
-    const { isAuth, authToken } = this.state;
+    const { isAuth, authToken, isLoading } = this.state;
 
     return (
       <AuthContext.Provider
         value={{
           isAuth,
           authToken,
+          isLoading,
           initLogin: this.initLogin,
           setAuthToken: this.setAuthToken,
           logout: this.logout
