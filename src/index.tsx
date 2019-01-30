@@ -1,11 +1,21 @@
-import App from "./App";
 import React from "react";
 import ReactDOM from "react-dom";
+import Index from "./components/Index";
+import { Account } from "./components/Account";
 import * as serviceWorker from "./serviceWorker";
+import { AuthProvider } from "./infrastructure/AuthContext";
+import { ProtectedRoute } from "./infrastructure/ProtectedRoute";
+import { BrowserRouter as Router, Route } from "react-router-dom";
 
-ReactDOM.render(<App />, document.getElementById("root"));
+const SpotifyDance = () => (
+  <Router>
+    <AuthProvider>
+      <Route exact path="/" component={Index} />
+      <ProtectedRoute exact path="/account" component={Account} />
+    </AuthProvider>
+  </Router>
+);
 
-// If you want your app to work offline and load faster, you can change
-// unregister() to register() below. Note this comes with some pitfalls.
-// Learn more about service workers: http://bit.ly/CRA-PWA
+ReactDOM.render(<SpotifyDance />, document.getElementById("root"));
+
 serviceWorker.unregister();
