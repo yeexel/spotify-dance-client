@@ -1,5 +1,5 @@
 {
-  "name": "spotify-dance-api",
+  "name": "spotify-dance-client",
   "version": 2,
   "builds": [
     {
