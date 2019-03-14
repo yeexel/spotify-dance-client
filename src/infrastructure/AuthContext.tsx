@@ -42,7 +42,7 @@ class AuthProvider extends React.Component<Props, State> {
   initLogin = () => {
     const spotifyLoginPopup: any = window.open(
       process.env.NODE_ENV === "production"
-        ? "https://spotify-dance-api.herokuapp.com/login"
+        ? "http://spotify-dance-api-dev.us-east-1.elasticbeanstalk.com/login"
         : "http://localhost:5000/login",
       "top",
       "location=yes,height=570,width=520,scrollbars=yes,status=yes"

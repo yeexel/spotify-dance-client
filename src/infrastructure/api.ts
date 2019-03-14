@@ -17,7 +17,7 @@ service.register({
 
 const API_BASE_URL =
   process.env.NODE_ENV === "production"
-    ? "https://spotify-dance-api.herokuapp.com/api"
+    ? "http://spotify-dance-api-dev.us-east-1.elasticbeanstalk.com/api"
     : "http://localhost:5000/api";
 
 const getAccount = async (token: string) => {
