@@ -25,21 +25,21 @@ class AuthProvider extends React.Component<Props, State> {
   };
 
   componentDidMount() {
-    console.log("AuthProvider::componentDidMount");
-
     const authToken = window.localStorage.getItem(LS_KEY);
 
     if (authToken) {
-      console.log("AuthProvider::setAuthTokenFromComponentDidMount");
       this.setState({ isAuth: true, authToken, isLoading: false });
     } else {
       this.setState({ isLoading: false });
     }
+
+    // @ts-ignore
+    window.onResponseErrorLogout = () => {
+      this.logout();
+    }
   }
 
   initLogin = () => {
-    console.log("AuthContext::initLogin");
-
     const spotifyLoginPopup: any = window.open(
       process.env.NODE_ENV === "production"
         ? "https://spotify-dance-api.herokuapp.com/login"
@@ -70,8 +70,6 @@ class AuthProvider extends React.Component<Props, State> {
   };
 
   logout = () => {
-    console.log("AuthContext::logout");
-
     if (window.localStorage.getItem(LS_KEY)) {
       window.localStorage.removeItem(LS_KEY);
     }

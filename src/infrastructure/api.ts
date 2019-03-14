@@ -1,4 +1,19 @@
 import axios from "axios";
+import { Service } from "axios-middleware";
+
+const service = new Service(axios);
+
+service.register({
+  // handle 401 errors
+  onResponseError(error: string) {
+    console.log(`${error}`);
+    // @ts-ignore
+    if (window.onResponseErrorLogout) {
+      // @ts-ignore
+      window.onResponseErrorLogout();
+    }
+  }
+});
 
 const API_BASE_URL =
   process.env.NODE_ENV === "production"

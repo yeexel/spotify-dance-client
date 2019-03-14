@@ -4,9 +4,9 @@ import Index from "./components/Index";
 import Account from "./components/Account";
 import Playlists from "./components/Playlists";
 import * as serviceWorker from "./serviceWorker";
+import { BrowserRouter as Router } from "react-router-dom";
 import { AuthProvider } from "./infrastructure/AuthContext";
 import { ProtectedRoute } from "./infrastructure/ProtectedRoute";
-import { BrowserRouter as Router, Route } from "react-router-dom";
 
 const SpotifyDance = () => (
   <Router>
