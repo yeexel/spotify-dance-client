@@ -4,21 +4,21 @@ import { getAccount } from "../infrastructure/api";
 import { withAuthContext } from "../infrastructure/AuthContext";
 
 interface State {
-  displayName: string;
-  email: string;
+  data: {
+    name: string,
+    email: string,
+    avatar_url: string
+  },
   isLoading: boolean;
-  imageSrc: string;
-  imageHeight: number;
-  imageWidth: number;
 }
 
 class Account extends React.Component<any, State> {
   state = {
-    displayName: "",
-    email: "",
-    imageSrc: "",
-    imageHeight: 0,
-    imageWidth: 0,
+    data: {
+      name: "",
+      email: "",
+      avatar_url: ""
+    },
     isLoading: true
   };
 
@@ -33,22 +33,14 @@ class Account extends React.Component<any, State> {
 
     this.setState({
       isLoading: false,
-      email: accountData.email,
-      displayName: accountData.display_name,
-      imageSrc: accountData.images[0].url,
-      imageHeight: accountData.images[0].height,
-      imageWidth: accountData.images[0].width
+      data: accountData
     });
   };
 
   render() {
     const {
       isLoading,
-      email,
-      imageSrc,
-      imageHeight,
-      imageWidth,
-      displayName
+      data
     } = this.state;
 
     return (
@@ -58,11 +50,11 @@ class Account extends React.Component<any, State> {
           <div>"Loading user data..."</div>
         ) : (
           <div>
-            <span>{displayName}</span>
+            <span>{data.name}</span>
             <br />
-            <span>{email}</span>
+            <span>{data.email}</span>
             <br />
-            <img src={imageSrc} width={imageWidth} height={imageHeight} />
+            <img src={data.avatar_url} width={200} height={200} />
           </div>
         )}
         <Link to="/">Dashboard</Link>

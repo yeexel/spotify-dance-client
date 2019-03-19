@@ -50,7 +50,6 @@ class AuthProvider extends React.Component<Props, State> {
 
     // @ts-ignore
     window.spotifyLoginCallback = authToken => {
-      console.log(authToken);
       spotifyLoginPopup.close();
       window.localStorage.setItem(LS_KEY, authToken);
       this.setState({
