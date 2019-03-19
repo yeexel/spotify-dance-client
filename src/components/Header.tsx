@@ -67,7 +67,6 @@ const Logo = styled.div`
     position: relative;
 
     & span:nth-of-type(1) {
-      font-family: "KoHo", sans-serif;
       font-size: 25px;
       font-weight: 600;
     }

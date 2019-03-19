@@ -30,4 +30,14 @@ const getAccount = async (token: string) => {
   return accountData.data;
 };
 
-export { getAccount };
+const getPlaylists = async (token: string) => {
+  const playlistData = await axios.get(`${API_BASE_URL}/playlists`, {
+    headers: {
+      Authorization: `Bearer ${token}`
+    }
+  });
+
+  return playlistData.data;
+};
+
+export { getAccount, getPlaylists };

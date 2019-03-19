@@ -28,16 +28,21 @@ class Index extends React.Component<any, any> {
 export default withAuthContext(Index);
 
 const GlobalStyle = createGlobalStyle`
-  body {
+  html,
+  body,
+  #root {
     padding: 0;
     margin: 0;
-    overflow: hidden;
+    height: 100%;
+    min-height: 100%;
+    font-family: "KoHo", sans-serif;
   }
 `;
 
 const Container = styled.div`
   width: 100%;
-  height: 800px;
+  height: 100%;
+  overflow: scroll;
   background: linear-gradient(30deg, #a38180 0%, #f8a36c 100%);
   -webkit-animation: adjustHue 10s infinite;
 
