@@ -55,7 +55,6 @@ const Container = styled.div`
     display: flex;
     justify-content: space-between;
     align-items: center;
-    width: 1000px;
     margin: 0px auto;
     height: 100%;
     transition: 0.3s;
