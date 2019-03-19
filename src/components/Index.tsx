@@ -38,7 +38,7 @@ const GlobalStyle = createGlobalStyle`
 const Container = styled.div`
   width: 100%;
   height: 800px;
-  background: linear-gradient(30deg, #f58480 0%, #f8a36c 100%);
+  background: linear-gradient(30deg, #a38180 0%, #f8a36c 100%);
   -webkit-animation: adjustHue 10s infinite;
 
   & @-webkit-keyframes adjustHue {
