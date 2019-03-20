@@ -66,7 +66,7 @@ export default withAuthContext(Header);
 
 const HeaderContainer = styled.header`
   color: #fff;
-  height: 80px;
+  height: 100px;
   position: fixed;
   top: 0;
   width: 100%;
@@ -88,11 +88,11 @@ const Container = styled.div`
 `;
 
 const Logo = styled.div`
-  margin-top: -15px;
+  margin-top: -10px;
 
   > img {
-    width: 16vmin;
-    height: 16vmin;
+    width: 16.5vmin;
+    height: 16.5vmin;
 
     // @media (max-width: 500px) {
     //   width: 80px;
@@ -117,12 +117,18 @@ const Icons = styled.div`
   ${HeaderContainer} ${Container} & img {
     margin: 0 15px 0;
     display: block;
-    height: 20px;
-    width: 20px;
+    height: 25px;
+    width: 25px;
+
+    @media (max-width: 500px) {
+      width: 14px;
+      height: 14px;
+    }
   }
 `;
 
 const LoginButtonContainer = styled.div`
+  margin-top: -10px;
 `
 
 const LoginButton = styled.button`
