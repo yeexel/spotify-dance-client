@@ -6,33 +6,55 @@ import Record from "../img/record.png";
 
 class Playlists extends React.Component<any, any> {
   state = {
-    data: {
-      items: []
-    },
-    isLoading: true
+    playlists: [],
+    isLoading: false,
+    hasMore: false,
+    initialLoad: true,
+    limit: 20,
+    offset: 0
   }
 
   el: any;
 
   componentDidMount() {
     this._fetchPlaylists();
+
+    this.setState({ initialLoad: false })
+
+    window.addEventListener("scroll", this.scrollEventHandler);
+  }
+
+  componentWillUnmount() {
+    window.removeEventListener("scroll", this.scrollEventHandler);
+  }
+
+  scrollEventHandler = () => {
+    const { hasMore } = this.state;
+
+    let scrollHeight, totalHeight;
+    scrollHeight = document.body.scrollHeight;
+    totalHeight = window.scrollY + window.innerHeight;
+
+    if(totalHeight >= scrollHeight && hasMore) {
+      this.setState({ offset: this.state.offset + this.state.limit }, this._fetchPlaylists);
+    }
   }
 
   render() {
-    const { data, isLoading } = this.state;
+    const { playlists, isLoading, initialLoad } = this.state;
 
-    if (isLoading) {
+    if (initialLoad) {
       return null;
     }
 
     return (
       <Container>
-        {data.items.map((playlist: any) => {
+        {playlists.map((playlist: any) => {
           return (
             <PlaylistContainer key={playlist.id}>
               <PlaylistImage src={playlist.images[0].url} />
               <RecordImage style={{ position: 'absolute' }} id="rec" width="250" height="250" src={Record} />
-              <PlaylistTitle>{playlist.name}</PlaylistTitle>
+              {/* <PlaylistTitle>{playlist.name}</PlaylistTitle> */}
               {/* <PlaylistCreatedBy>Created by <a style={{ color: '#fff', textDecoration: 'none' }} href={playlist.owner.uri}>{playlist.owner.display_name}</a></PlaylistCreatedBy> */}
             </PlaylistContainer>
           )
@@ -43,12 +65,21 @@ class Playlists extends React.Component<any, any> {
 
   _fetchPlaylists = async () => {
     const { authContext } = this.props;
+    const { limit, offset } = this.state;
 
-    const accountData = await getPlaylists(authContext.authToken);
+    this.setState({ isLoading: true });
+
+    const playlistData = await getPlaylists(limit, offset, authContext.authToken);
+
+    const playlists = [
+      ...this.state.playlists,
+      ...playlistData.items
+    ];
 
     this.setState({
       isLoading: false,
-      data: accountData
+      playlists,
+      hasMore: playlists.length < playlistData.total
     });
   }
 }
@@ -60,7 +91,7 @@ const Container = styled.div`
   margin-top: 100px;
   height: 100%;
   grid-template-columns: auto auto auto auto;
-  grid-gap: 10px;
+  // grid-gap: 10px;
   justify-content: space-evenly;
   margin-bottom: 50px;
 
@@ -88,7 +119,7 @@ const PlaylistContainer = styled.div`
   border-radius: 5px;
 
   &:hover {
-    background-color: rgb(110, 154, 162, 0.8);
+    // background-color: rgb(110, 154, 162, 0.8);
 
     @media (max-width: 500px) {
       transition: none;
@@ -102,8 +133,9 @@ const PlaylistImage = styled.img`
   height: 250px;
   z-index: 1;
   transition: .5s ease;
-  border: 3px solid #fff;
+  // border: 3px solid #fff;
   border-radius: 5px;
+  box-shadow: 0 8px 6px -6px black;
 
   ${PlaylistContainer}:hover & {
     transform: rotate(-3deg);

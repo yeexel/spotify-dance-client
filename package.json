@@ -1,6 +1,6 @@
 {
   "name": "spotify-dance-client",
-  "version": "0.4.2",
+  "version": "0.4.3",
   "private": true,
   "dependencies": {
     "@types/jest": "23.3.13",

@@ -30,8 +30,8 @@ const getAccount = async (token: string) => {
   return accountData.data;
 };
 
-const getPlaylists = async (token: string) => {
-  const playlistData = await axios.get(`${API_BASE_URL}/playlists`, {
+const getPlaylists = async (limit: number, offset: number, token: string) => {
+  const playlistData = await axios.get(`${API_BASE_URL}/playlists?limit=${limit}&offset=${offset}`, {
     headers: {
       Authorization: `Bearer ${token}`
     }
