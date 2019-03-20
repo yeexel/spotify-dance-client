@@ -44,11 +44,8 @@ const Container = styled.div`
   min-height: 100%;
   overflow: scroll;
   background-image: linear-gradient(90deg, #C074B2, #8AB5E8);
-  -webkit-animation: adjustHue 10s infinite;
 
-  & @-webkit-keyframes adjustHue {
-    50% {
-      -webkit-filter: saturate(150%) hue-rotate(-35deg);
-    }
+  @media (max-width: 500px) {
+    overflow: hidden;
   }
 `;
