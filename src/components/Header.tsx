@@ -47,19 +47,23 @@ class Header extends React.Component<any, any> {
               <DesktopNav>
                 <NavItem>
                   <Link to="/">
-                    <FontAwesomeIcon icon="headphones" /> Playlists
+                    {/*<FontAwesomeIcon icon="headphones" /> */}Playlists
                   </Link>
                 </NavItem>
                 <NavItemSeparator />
                 <NavItem>
                   <Link to="/account">
-                    <FontAwesomeIcon icon="user" /> Profile
+                    {/*<FontAwesomeIcon icon="user" /> */}Profile
                   </Link>
                 </NavItem>
                 <NavItemSeparator />
                 <NavItem>|</NavItem>
                 <NavItemSeparator />
-                <NavItem onClick={authContext.logout}><FontAwesomeIcon icon="sign-out-alt" /> Logout</NavItem>
+                  <NavItem onClick={authContext.logout}>
+                    <Link to="">
+                      {/*<FontAwesomeIcon icon="sign-out-alt" /> */}Log out
+                    </Link>
+                  </NavItem>
               </DesktopNav>
               <MobileNav onClick={this.toggleSideNav}>
                 <FontAwesomeIcon icon="bars" />
@@ -156,6 +160,12 @@ const NavItem = styled.span`
   > a {
     color: #fff;
     text-decoration: none;
+    border-bottom: 2px solid transparent;
+    transition: all ease-in-out 250ms;
+  }
+
+  > a:hover {
+    border-color: #fff;
   }
 `
 
