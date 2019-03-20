@@ -73,7 +73,7 @@ const HeaderContainer = styled.header`
   z-index: 2;
 
   @media (max-width: 500px) {
-    height: 40px;
+    height: 50px;
     // background-color: rgba(8, 8, 8, 0.9);
     transition: none;
   }
@@ -91,13 +91,13 @@ const Logo = styled.div`
   margin-top: -10px;
 
   > img {
-    width: 16.5vmin;
-    height: 16.5vmin;
+    width: 150px;
+    height: 150px;
 
-    // @media (max-width: 500px) {
-    //   width: 80px;
-    //   height: 80px;
-    // }
+    @media (max-width: 500px) {
+      width: 90px;
+      height: 90px;
+    }
   }
 
   @media (max-width: 500px) {
@@ -137,12 +137,17 @@ const LoginButton = styled.button`
   border: 0.2em solid #fff;
   color: #fff;
   cursor: pointer;
-  font-size: 1.4vmin;
+  font-size: 12px;
   font-weight: bold;
   padding: 0.7em 1.5em;
   outline: none;
   text-transform: uppercase;
   transition: all 0.25s ease;
+
+  @media (max-width: 500px) {
+    font-size: 8px;
+    margin-top: 15px;
+  }
 
   &:hover {
     background: #fff;

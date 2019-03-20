@@ -63,17 +63,29 @@ const Hero = styled.div`
 `
 
 const HeroTitle = styled.span`
-  font-size: 5vmin;
+  font-size: 52px;
   color: #fff;
   font-weight: bold;
+
+  @media (max-width: 500px) {
+    font-size: 30px;
+  }
 `;
 
 const HeroTitleSecond = styled(HeroTitle)`
-  font-size: 3.5vmin;
+  font-size: 36px;
+
+  @media (max-width: 500px) {
+    font-size: 22px;
+  }
 `;
 
 const HeroTitleThird = styled(HeroTitle)`
-  font-size: 3vmin;
+  font-size: 28px;
+
+  @media (max-width: 500px) {
+    font-size: 18px;
+  }
 `;
 
 const Separator = styled.div`
