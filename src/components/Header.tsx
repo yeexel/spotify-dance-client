@@ -2,8 +2,28 @@ import * as React from "react";
 import styled from "styled-components";
 import { Link } from "react-router-dom";
 import { withAuthContext } from "../infrastructure/AuthContext";
+import LogoT from "../img/logo_t.png";
 
 class Header extends React.Component<any, any> {
+  componentDidMount() {
+    window.addEventListener("scroll", this.scrollEventListener);
+  }
+
+  componentWillUnmount() {
+    window.removeEventListener("scroll", this.scrollEventListener);
+  }
+
+  scrollEventListener = () => {
+    const headerEl = document.getElementsByTagName("header")[0];
+
+    if (window.pageYOffset > 50) {
+      headerEl.style.background = "rgba(0, 0, 0, 0.6)";
+      headerEl.style.transition = "background-color 200ms linear";
+    } else {
+      headerEl.style.background = "transparent";
+    }
+  }
+
   render() {
     const { authContext } = this.props;
 
@@ -11,7 +31,7 @@ class Header extends React.Component<any, any> {
       <HeaderContainer>
         <Container>
           <Logo>
-            <span>DanceList</span>
+            <img src={LogoT} />
           </Logo>
           {authContext.isAuth && (
             <Icons>
@@ -43,32 +63,42 @@ class Header extends React.Component<any, any> {
 export default withAuthContext(Header);
 
 const HeaderContainer = styled.header`
-  background: #000;
   color: #fff;
-  height: 100px;
-  opacity: 0.3;
-  position: relative;
-`;
+  height: 80px;
+  position: fixed;
+  top: 0;
+  width: 100%;
 
-const Container = styled.div`
-  ${HeaderContainer} & {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin: 0px auto;
-    height: 100%;
-    transition: 0.3s;
+  @media (max-width: 500px) {
+    height: 50px;
   }
 `;
 
-const Logo = styled.div`
-  ${HeaderContainer} ${Container} & {
-    position: relative;
+const Container = styled.div`
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  height: 100%;
+`;
 
-    & span:nth-of-type(1) {
-      font-size: 25px;
-      font-weight: 600;
+const Logo = styled.div`
+  margin-left: 20px;
+  margin-top: -15px;
+
+  > img {
+    width: 150px;
+    height: 150px;
+
+    @media (max-width: 500px) {
+      width: 80px;
+      height: 80px;
     }
+  }
+
+  @media (max-width: 500px) {
+    margin-left: 0;
+    margin-top: -10px;
   }
 `;
 

@@ -44,7 +44,7 @@ class Account extends React.Component<any, State> {
     } = this.state;
 
     return (
-      <React.Fragment>
+      <div>
         <div>Account page YES!!!</div>
         {isLoading ? (
           <div>"Loading user data..."</div>
@@ -58,7 +58,7 @@ class Account extends React.Component<any, State> {
           </div>
         )}
         <Link to="/">Dashboard</Link>
-      </React.Fragment>
+      </div>
     );
   }
 }

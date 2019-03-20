@@ -55,7 +55,8 @@ export default withAuthContext(Playlists);
 
 const Container = styled.div`
   display: grid;
-  margin-top: 20px;
+  margin-top: 100px;
+  height: 100%;
   grid-template-columns: auto auto auto auto;
   grid-gap: 15px;
   justify-content: space-evenly;
