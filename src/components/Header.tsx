@@ -33,7 +33,6 @@ class Header extends React.Component<any, any> {
           <Logo>
             <img src={LogoT} />
           </Logo>
-          {/* <Separator /> */}
           {authContext.isAuth && (
             <Icons>
               <Link to="/account">
@@ -74,7 +73,7 @@ const HeaderContainer = styled.header`
   z-index: 2;
 
   @media (max-width: 500px) {
-    height: 50px;
+    height: 40px;
     // background-color: rgba(8, 8, 8, 0.9);
     transition: none;
   }
@@ -89,26 +88,21 @@ const Container = styled.div`
 `;
 
 const Logo = styled.div`
-  margin-top: -10px;
+  margin-top: -15px;
 
   > img {
-    width: 150px;
-    height: 150px;
+    width: 16vmin;
+    height: 16vmin;
 
-    @media (max-width: 500px) {
-      width: 80px;
-      height: 80px;
-    }
+    // @media (max-width: 500px) {
+    //   width: 80px;
+    //   height: 80px;
+    // }
   }
 
   @media (max-width: 500px) {
     margin-top: -5px;
   }
-`;
-
-const Separator = styled.div`
-  min-width: 800px;
-  width: auto;
 `;
 
 const Icons = styled.div`
@@ -123,8 +117,8 @@ const Icons = styled.div`
   ${HeaderContainer} ${Container} & img {
     margin: 0 15px 0;
     display: block;
-    height: 25px;
-    width: 25px;
+    height: 20px;
+    width: 20px;
   }
 `;
 
@@ -137,7 +131,7 @@ const LoginButton = styled.button`
   border: 0.2em solid #fff;
   color: #fff;
   cursor: pointer;
-  font-size: 1.3vmin;
+  font-size: 1.4vmin;
   font-weight: bold;
   padding: 0.7em 1.5em;
   outline: none;

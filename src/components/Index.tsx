@@ -63,17 +63,17 @@ const Hero = styled.div`
 `
 
 const HeroTitle = styled.span`
-  font-size: 4.5vmin;
+  font-size: 5vmin;
   color: #fff;
   font-weight: bold;
 `;
 
 const HeroTitleSecond = styled(HeroTitle)`
-  font-size: 3vmin;
+  font-size: 3.5vmin;
 `;
 
 const HeroTitleThird = styled(HeroTitle)`
-  font-size: 2.5vmin;
+  font-size: 3vmin;
 `;
 
 const Separator = styled.div`
