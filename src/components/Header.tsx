@@ -33,9 +33,7 @@ class Header extends React.Component<any, any> {
           <Logo>
             <img src={LogoT} />
           </Logo>
-          {/* <div>
-            <span>Your Playlists</span>
-          </div> */}
+          {/* <Separator /> */}
           {authContext.isAuth && (
             <Icons>
               <Link to="/account">
@@ -53,9 +51,11 @@ class Header extends React.Component<any, any> {
             </Icons>
           )}
           {!authContext.isAuth && (
-            <LoginButton onClick={authContext.initLogin}>
-              Login with Spotify
-            </LoginButton>
+            <LoginButtonContainer>
+              <LoginButton onClick={authContext.initLogin}>
+                Login with Spotify
+              </LoginButton>
+            </LoginButtonContainer>
           )}
         </Container>
       </HeaderContainer>
@@ -83,13 +83,13 @@ const HeaderContainer = styled.header`
 const Container = styled.div`
   display: flex;
   flex-direction: row;
-  justify-content: space-between;
+  justify-content: space-around;
   align-items: center;
   height: 100%;
 `;
 
 const Logo = styled.div`
-  margin-top: -15px;
+  margin-top: -10px;
 
   > img {
     width: 150px;
@@ -102,8 +102,13 @@ const Logo = styled.div`
   }
 
   @media (max-width: 500px) {
-    margin-top: -10px;
+    margin-top: -5px;
   }
+`;
+
+const Separator = styled.div`
+  min-width: 800px;
+  width: auto;
 `;
 
 const Icons = styled.div`
@@ -118,10 +123,13 @@ const Icons = styled.div`
   ${HeaderContainer} ${Container} & img {
     margin: 0 15px 0;
     display: block;
-    height: 27px;
-    width: 27px;
+    height: 25px;
+    width: 25px;
   }
 `;
+
+const LoginButtonContainer = styled.div`
+`
 
 const LoginButton = styled.button`
   background-color: transparent;
@@ -130,6 +138,7 @@ const LoginButton = styled.button`
   color: #fff;
   cursor: pointer;
   font-size: 1.3vmin;
+  font-weight: bold;
   padding: 0.7em 1.5em;
   outline: none;
   text-transform: uppercase;

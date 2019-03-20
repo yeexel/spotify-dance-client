@@ -11,7 +11,7 @@ class Index extends React.Component<any, any> {
   }
 
   render() {
-    const { children } = this.props;
+    const { children, authContext } = this.props;
 
     return (
       <React.Fragment>
@@ -19,6 +19,13 @@ class Index extends React.Component<any, any> {
         <Container>
           <Header />
           {children}
+          {!authContext.isAuth && (
+            <Hero>
+              <HeroTitle>Pick up your playlist and make your friends dance.</HeroTitle>
+              <Separator />
+              <HeroTitleSecond>Share the experience.</HeroTitleSecond>
+            </Hero>
+          )}
         </Container>
       </React.Fragment>
     );
@@ -44,4 +51,25 @@ const Container = styled.div`
   min-height: 100%;
   overflow: scroll;
   background-image: linear-gradient(90deg, #C074B2, #8AB5E8);
+`;
+
+const Hero = styled.div`
+  margin-top: 200px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+`
+
+const HeroTitle = styled.span`
+  font-size: 4vmin;
+  color: #fff;
+  font-weight: bold;
+`;
+
+const HeroTitleSecond = styled(HeroTitle)`
+  font-size: 3.5vmin;
+`;
+
+const Separator = styled.div`
+  height: 4vmin;
 `;

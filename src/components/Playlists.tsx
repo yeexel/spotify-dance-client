@@ -31,8 +31,6 @@ class Playlists extends React.Component<any, any> {
   scrollEventHandler = () => {
     const { hasMore } = this.state;
 
-    console.log(11);
-
     let scrollHeight, totalHeight;
     scrollHeight = document.body.scrollHeight;
     totalHeight = window.scrollY + window.innerHeight;
@@ -91,11 +89,8 @@ export default withAuthContext(Playlists);
 const Container = styled.div`
   display: grid;
   margin-top: 100px;
-  // height: 100%;
   grid-template-columns: auto auto auto auto;
-  // grid-gap: 10px;
   justify-content: space-evenly;
-  margin-bottom: 50px;
 
   @media (max-width: 1000px) {
     grid-template-columns: auto auto auto;
@@ -145,13 +140,14 @@ const PlaylistImage = styled.img`
   height: 250px;
   z-index: 1;
   transition: .5s ease;
-  // border: 3px solid #fff;
+  // border: 2px solid #fff;
   border-radius: 5px;
   box-shadow: 0 8px 6px -6px black;
 
   ${PlaylistContainer}:hover & {
     transform: rotate(-3deg);
     margin: 0 0 0 -15px;
+    cursor: pointer;
 
     @media (max-width: 500px) {
       transform: none;
@@ -178,14 +174,21 @@ const RecordImage = styled.img`
 
 const PlaylistTitle = styled.span`
   align-self: center;
-  font-size: 22px;
+  font-size: 20px;
   font-weight: bold;
   margin-top: 10px;
-  color: #000;
-  display: none;
+  color: #fff;
+  opacity: 0;
+  transition: opacity 500ms;
+  max-width: 250px;
+
+  ${PlaylistContainer}:hover & {
+    transform: rotate(-3deg) initial;
+    opacity: 1;
+  }
 
   @media (max-width: 500px) {
-    display: block;
+    opacity: 1;
   }
 `
 
