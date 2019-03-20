@@ -106,13 +106,13 @@ const Container = styled.div`
   }
 
   @media (max-width: 500px) {
-    // grid-template-columns: auto;
+    grid-template-columns: auto;
 
-    display: flex;
-    flex-direction: row;
-    min-width: 100%;
-    min-height: 100%;
-    justify-content: flex-start;
+    // display: flex;
+    // flex-direction: row;
+    // min-width: 100%;
+    // min-height: 100%;
+    // justify-content: flex-start;
   }
 `;
 
@@ -136,7 +136,7 @@ const PlaylistContainer = styled.div<{ firstChild: boolean }>`
   }
 
   @media (max-width: 500px) {
-    margin-left: ${props => props.firstChild ? Math.ceil((document.documentElement.clientWidth - 250) / 2) - 10 : 0}px;
+    // margin-left: ${props => props.firstChild ? Math.ceil((document.documentElement.clientWidth - 250) / 2) - 10 : 0}px;
   }
 `
 
