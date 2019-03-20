@@ -54,7 +54,7 @@ class Playlists extends React.Component<any, any> {
             <PlaylistContainer key={playlist.id}>
               <PlaylistImage src={playlist.images[0].url} />
               <RecordImage style={{ position: 'absolute' }} id="rec" width="250" height="250" src={Record} />
-              {/* <PlaylistTitle>{playlist.name}</PlaylistTitle> */}
+              <PlaylistTitle>{playlist.name}</PlaylistTitle>
               {/* <PlaylistCreatedBy>Created by <a style={{ color: '#fff', textDecoration: 'none' }} href={playlist.owner.uri}>{playlist.owner.display_name}</a></PlaylistCreatedBy> */}
             </PlaylistContainer>
           )
@@ -104,7 +104,12 @@ const Container = styled.div`
   }
 
   @media (max-width: 500px) {
-    grid-template-columns: auto;
+    // grid-template-columns: auto;
+
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    margin-left: ${Math.ceil((document.documentElement.clientWidth - 250) / 2) - 10}px;
   }
 `;
 
@@ -129,7 +134,7 @@ const PlaylistContainer = styled.div`
 `
 
 const PlaylistImage = styled.img`
-  widht: 250px;
+  width: 250px;
   height: 250px;
   z-index: 1;
   transition: .5s ease;
@@ -157,11 +162,10 @@ const RecordImage = styled.img`
   ${PlaylistContainer}:hover & {
     margin: 0 0 0 50px;
     transform: rotate(360deg);
+  }
 
-    @media (max-width: 500px) {
-      transform: none;
-      margin: 0;
-    }
+  @media (max-width: 500px) {
+    display: none;
   }
 `
 
