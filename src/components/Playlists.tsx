@@ -179,10 +179,15 @@ const RecordImage = styled.img`
 
 const PlaylistTitle = styled.span`
   align-self: center;
-  font-size: 24px;
+  font-size: 22px;
   font-weight: bold;
   margin-top: 10px;
-  color: #fff;
+  color: #000;
+  display: none;
+
+  @media (max-width: 500px) {
+    display: block;
+  }
 `
 
 const PlaylistCreatedBy = styled.span`
