@@ -191,6 +191,7 @@ const MobileSideNav = styled.div<{ show: boolean; }>`
   display: none;
 
   @media (max-width: 500px) {
+    display: block;
     height: 100%; /* 100% Full-height */
     width: ${props => props.show ? 250 : 0}px; /* 0 width - change this with JavaScript */
     position: fixed; /* Stay in place */
