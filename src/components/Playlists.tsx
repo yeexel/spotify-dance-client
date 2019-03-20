@@ -49,9 +49,9 @@ class Playlists extends React.Component<any, any> {
 
     return (
       <Container>
-        {playlists.map((playlist: any) => {
+        {playlists.map((playlist: any, index: number) => {
           return (
-            <PlaylistContainer key={playlist.id}>
+            <PlaylistContainer key={playlist.id} firstChild={index === 0}>
               <PlaylistImage src={playlist.images[0].url} />
               <RecordImage style={{ position: 'absolute' }} id="rec" width="250" height="250" src={Record} />
               <PlaylistTitle>{playlist.name}</PlaylistTitle>
@@ -109,11 +109,15 @@ const Container = styled.div`
     display: flex;
     flex-direction: row;
     justify-content: flex-start;
-    margin-left: ${Math.ceil((document.documentElement.clientWidth - 250) / 2) - 10}px;
+    overflow-y: hidden;
+    ::-webkit-scrollbar {
+      width: 0px;  /* remove scrollbar space */
+      background: transparent;  /* optional: just make scrollbar invisible */
+    }
   }
 `;
 
-const PlaylistContainer = styled.div`
+const PlaylistContainer = styled.div<{ firstChild: boolean }>`
   width: 250px;
   height:350px;
   background-color: transparent;
@@ -130,6 +134,10 @@ const PlaylistContainer = styled.div`
       transition: none;
       background-color: transparent;
     }
+  }
+
+  @media (max-width: 500px) {
+    margin-left: ${props => props.firstChild ? Math.ceil((document.documentElement.clientWidth - 250) / 2) - 10 : 0}px;
   }
 `
 
