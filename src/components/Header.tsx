@@ -74,6 +74,7 @@ class Header extends React.Component<any, any> {
                 </CloseBtnContainer>
                 <MobileSideNavLink to="/" onClick={this.toggleSideNav}>Playlists</MobileSideNavLink>
                 <MobileSideNavLink to="/account" onClick={this.toggleSideNav}>Profile</MobileSideNavLink>
+                <LogoutSideNavLink to="" onClick={authContext.logout}>Log out</LogoutSideNavLink>
               </MobileSideNav>
             </Nav>
           )}
@@ -215,6 +216,12 @@ const MobileSideNavLink = styled(Link)`
   color: #fff;
   display: block;
   transition: 0.3s;
+`;
+
+const LogoutSideNavLink = styled(MobileSideNavLink)`
+  position: fixed;
+  bottom: 0;
+  padding-bottom: 40px;
 `;
 
 const LoginButtonContainer = styled.div`
