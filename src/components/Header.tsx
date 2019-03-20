@@ -219,9 +219,7 @@ const MobileSideNavLink = styled(Link)`
 `;
 
 const LogoutSideNavLink = styled(MobileSideNavLink)`
-  position: fixed;
-  bottom: 0;
-  padding-bottom: 40px;
+  padding-top: 70px;
 `;
 
 const LoginButtonContainer = styled.div`
