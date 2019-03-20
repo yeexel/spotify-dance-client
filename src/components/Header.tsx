@@ -17,7 +17,7 @@ class Header extends React.Component<any, any> {
     const headerEl = document.getElementsByTagName("header")[0];
 
     if (window.pageYOffset > 50) {
-      headerEl.style.background = "rgba(0, 0, 0, 0.6)";
+      headerEl.style.background = "rgba(8, 8, 8, 0.9)";
       headerEl.style.transition = "background-color 200ms linear";
     } else {
       headerEl.style.background = "transparent";
@@ -33,6 +33,9 @@ class Header extends React.Component<any, any> {
           <Logo>
             <img src={LogoT} />
           </Logo>
+          {/* <div>
+            <span>Your Playlists</span>
+          </div> */}
           {authContext.isAuth && (
             <Icons>
               <Link to="/account">
@@ -68,6 +71,7 @@ const HeaderContainer = styled.header`
   position: fixed;
   top: 0;
   width: 100%;
+  z-index: 2;
 
   @media (max-width: 500px) {
     height: 50px;
@@ -83,7 +87,6 @@ const Container = styled.div`
 `;
 
 const Logo = styled.div`
-  margin-left: 20px;
   margin-top: -15px;
 
   > img {
@@ -97,7 +100,6 @@ const Logo = styled.div`
   }
 
   @media (max-width: 500px) {
-    margin-left: 0;
     margin-top: -10px;
   }
 `;

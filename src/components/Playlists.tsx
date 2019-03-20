@@ -2,6 +2,7 @@ import * as React from "react";
 import styled from "styled-components";
 import { getPlaylists } from "../infrastructure/api";
 import { withAuthContext } from "../infrastructure/AuthContext";
+import Record from "../img/record.png";
 
 class Playlists extends React.Component<any, any> {
   state = {
@@ -30,8 +31,9 @@ class Playlists extends React.Component<any, any> {
           return (
             <PlaylistContainer key={playlist.id}>
               <PlaylistImage src={playlist.images[0].url} />
+              <RecordImage style={{ position: 'absolute' }} id="rec" width="250" height="250" src={Record} />
               <PlaylistTitle>{playlist.name}</PlaylistTitle>
-              <PlaylistCreatedBy>Created by: <a style={{ color: '#4c4c4c', textDecoration: 'none' }} href={playlist.owner.uri}>{playlist.owner.display_name}</a></PlaylistCreatedBy>
+              {/* <PlaylistCreatedBy>Created by <a style={{ color: '#fff', textDecoration: 'none' }} href={playlist.owner.uri}>{playlist.owner.display_name}</a></PlaylistCreatedBy> */}
             </PlaylistContainer>
           )
         })}
@@ -58,7 +60,7 @@ const Container = styled.div`
   margin-top: 100px;
   height: 100%;
   grid-template-columns: auto auto auto auto;
-  grid-gap: 15px;
+  grid-gap: 10px;
   justify-content: space-evenly;
   margin-bottom: 50px;
 
@@ -81,20 +83,65 @@ const PlaylistContainer = styled.div`
   background-color: transparent;
   display: flex;
   flex-direction: column;
+  padding: 15px;
+  transition: 1s;
+  border-radius: 5px;
+
+  &:hover {
+    background-color: rgb(110, 154, 162, 0.8);
+
+    @media (max-width: 500px) {
+      transition: none;
+      background-color: transparent;
+    }
+  }
 `
 
 const PlaylistImage = styled.img`
   widht: 250px;
   height: 250px;
+  z-index: 1;
+  transition: .5s ease;
+  border: 3px solid #fff;
+  border-radius: 5px;
+
+  ${PlaylistContainer}:hover & {
+    transform: rotate(-3deg);
+    margin: 0 0 0 -15px;
+
+    @media (max-width: 500px) {
+      transform: none;
+      margin: 0;
+    }
+  }
+`
+
+const RecordImage = styled.img`
+  transition: .75s ease;
+  width: 240px;
+  height: 240px;
+  padding: 5px;
+
+  ${PlaylistContainer}:hover & {
+    margin: 0 0 0 50px;
+    transform: rotate(360deg);
+
+    @media (max-width: 500px) {
+      transform: none;
+      margin: 0;
+    }
+  }
 `
 
 const PlaylistTitle = styled.span`
   align-self: center;
   font-size: 24px;
   font-weight: bold;
+  margin-top: 10px;
+  color: #fff;
 `
 
 const PlaylistCreatedBy = styled.span`
   align-self: center;
-  color: #4c4c4c;
+  color: #fff;
 `
