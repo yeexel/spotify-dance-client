@@ -146,7 +146,7 @@ const LoginButton = styled.button`
 
   @media (max-width: 500px) {
     font-size: 8px;
-    margin-top: 15px;
+    margin-top: 7px;
   }
 
   &:hover {
