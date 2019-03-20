@@ -3,8 +3,13 @@ import styled from "styled-components";
 import { Link } from "react-router-dom";
 import { withAuthContext } from "../infrastructure/AuthContext";
 import LogoT from "../img/logo_t.png";
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 class Header extends React.Component<any, any> {
+  state = {
+    sideNav: false
+  }
+
   componentDidMount() {
     window.addEventListener("scroll", this.scrollEventListener);
   }
@@ -13,11 +18,15 @@ class Header extends React.Component<any, any> {
     window.removeEventListener("scroll", this.scrollEventListener);
   }
 
+  toggleSideNav = () => {
+    this.setState({ sideNav: !this.state.sideNav })
+  }
+
   scrollEventListener = () => {
     const headerEl = document.getElementsByTagName("header")[0];
 
     if (window.pageYOffset > 50) {
-      headerEl.style.background = "rgba(8, 8, 8, 0.9)";
+      headerEl.style.background = "rgba(8, 8, 8, 1)";
       headerEl.style.transition = "background-color 200ms linear";
     } else {
       headerEl.style.background = "transparent";
@@ -34,20 +43,35 @@ class Header extends React.Component<any, any> {
             <img src={LogoT} />
           </Logo>
           {authContext.isAuth && (
-            <Icons>
-              <Link to="/account">
-                <div className="block">
-                  <img src="data:image/svg+xml;utf8;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iaXNvLTg4NTktMSI/Pgo8IS0tIEdlbmVyYXRvcjogQWRvYmUgSWxsdXN0cmF0b3IgMTkuMS4wLCBTVkcgRXhwb3J0IFBsdWctSW4gLiBTVkcgVmVyc2lvbjogNi4wMCBCdWlsZCAwKSAgLS0+CjxzdmcgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIiB4bWxuczp4bGluaz0iaHR0cDovL3d3dy53My5vcmcvMTk5OS94bGluayIgdmVyc2lvbj0iMS4xIiBpZD0iQ2FwYV8xIiB4PSIwcHgiIHk9IjBweCIgdmlld0JveD0iMCAwIDQ4Mi45IDQ4Mi45IiBzdHlsZT0iZW5hYmxlLWJhY2tncm91bmQ6bmV3IDAgMCA0ODIuOSA0ODIuOTsiIHhtbDpzcGFjZT0icHJlc2VydmUiIHdpZHRoPSI1MTJweCIgaGVpZ2h0PSI1MTJweCI+CjxnPgoJPGc+CgkJPHBhdGggZD0iTTIzOS43LDI2MC4yYzAuNSwwLDEsMCwxLjYsMGMwLjIsMCwwLjQsMCwwLjYsMGMwLjMsMCwwLjcsMCwxLDBjMjkuMy0wLjUsNTMtMTAuOCw3MC41LTMwLjUgICAgYzM4LjUtNDMuNCwzMi4xLTExNy44LDMxLjQtMTI0LjljLTIuNS01My4zLTI3LjctNzguOC00OC41LTkwLjdDMjgwLjgsNS4yLDI2Mi43LDAuNCwyNDIuNSwwaC0wLjdjLTAuMSwwLTAuMywwLTAuNCwwaC0wLjYgICAgYy0xMS4xLDAtMzIuOSwxLjgtNTMuOCwxMy43Yy0yMSwxMS45LTQ2LjYsMzcuNC00OS4xLDkxLjFjLTAuNyw3LjEtNy4xLDgxLjUsMzEuNCwxMjQuOUMxODYuNywyNDkuNCwyMTAuNCwyNTkuNywyMzkuNywyNjAuMnogICAgIE0xNjQuNiwxMDcuM2MwLTAuMywwLjEtMC42LDAuMS0wLjhjMy4zLTcxLjcsNTQuMi03OS40LDc2LTc5LjRoMC40YzAuMiwwLDAuNSwwLDAuOCwwYzI3LDAuNiw3Mi45LDExLjYsNzYsNzkuNCAgICBjMCwwLjMsMCwwLjYsMC4xLDAuOGMwLjEsMC43LDcuMSw2OC43LTI0LjcsMTA0LjVjLTEyLjYsMTQuMi0yOS40LDIxLjItNTEuNSwyMS40Yy0wLjIsMC0wLjMsMC0wLjUsMGwwLDBjLTAuMiwwLTAuMywwLTAuNSwwICAgIGMtMjItMC4yLTM4LjktNy4yLTUxLjQtMjEuNEMxNTcuNywxNzYuMiwxNjQuNSwxMDcuOSwxNjQuNiwxMDcuM3oiIGZpbGw9IiNGRkZGRkYiLz4KCQk8cGF0aCBkPSJNNDQ2LjgsMzgzLjZjMC0wLjEsMC0wLjIsMC0wLjNjMC0wLjgtMC4xLTEuNi0wLjEtMi41Yy0wLjYtMTkuOC0xLjktNjYuMS00NS4zLTgwLjljLTAuMy0wLjEtMC43LTAuMi0xLTAuMyAgICBjLTQ1LjEtMTEuNS04Mi42LTM3LjUtODMtMzcuOGMtNi4xLTQuMy0xNC41LTIuOC0xOC44LDMuM2MtNC4zLDYuMS0yLjgsMTQuNSwzLjMsMTguOGMxLjcsMS4yLDQxLjUsMjguOSw5MS4zLDQxLjcgICAgYzIzLjMsOC4zLDI1LjksMzMuMiwyNi42LDU2YzAsMC45LDAsMS43LDAuMSwyLjVjMC4xLDktMC41LDIyLjktMi4xLDMwLjljLTE2LjIsOS4yLTc5LjcsNDEtMTc2LjMsNDEgICAgYy05Ni4yLDAtMTYwLjEtMzEuOS0xNzYuNC00MS4xYy0xLjYtOC0yLjMtMjEuOS0yLjEtMzAuOWMwLTAuOCwwLjEtMS42LDAuMS0yLjVjMC43LTIyLjgsMy4zLTQ3LjcsMjYuNi01NiAgICBjNDkuOC0xMi44LDg5LjYtNDAuNiw5MS4zLTQxLjdjNi4xLTQuMyw3LjYtMTIuNywzLjMtMTguOGMtNC4zLTYuMS0xMi43LTcuNi0xOC44LTMuM2MtMC40LDAuMy0zNy43LDI2LjMtODMsMzcuOCAgICBjLTAuNCwwLjEtMC43LDAuMi0xLDAuM2MtNDMuNCwxNC45LTQ0LjcsNjEuMi00NS4zLDgwLjljMCwwLjksMCwxLjctMC4xLDIuNWMwLDAuMSwwLDAuMiwwLDAuM2MtMC4xLDUuMi0wLjIsMzEuOSw1LjEsNDUuMyAgICBjMSwyLjYsMi44LDQuOCw1LjIsNi4zYzMsMiw3NC45LDQ3LjgsMTk1LjIsNDcuOHMxOTIuMi00NS45LDE5NS4yLTQ3LjhjMi4zLTEuNSw0LjItMy43LDUuMi02LjMgICAgQzQ0Nyw0MTUuNSw0NDYuOSwzODguOCw0NDYuOCwzODMuNnoiIGZpbGw9IiNGRkZGRkYiLz4KCTwvZz4KPC9nPgo8Zz4KPC9nPgo8Zz4KPC9nPgo8Zz4KPC9nPgo8Zz4KPC9nPgo8Zz4KPC9nPgo8Zz4KPC9nPgo8Zz4KPC9nPgo8Zz4KPC9nPgo8Zz4KPC9nPgo8Zz4KPC9nPgo8Zz4KPC9nPgo8Zz4KPC9nPgo8Zz4KPC9nPgo8Zz4KPC9nPgo8Zz4KPC9nPgo8L3N2Zz4K" />
-                </div>
-              </Link>
-              <div
-                onClick={authContext.logout}
-                style={{ cursor: "pointer" }}
-                className="block"
-              >
-                <img src="data:image/svg+xml;utf8;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iaXNvLTg4NTktMSI/Pgo8IS0tIEdlbmVyYXRvcjogQWRvYmUgSWxsdXN0cmF0b3IgMTkuMS4wLCBTVkcgRXhwb3J0IFBsdWctSW4gLiBTVkcgVmVyc2lvbjogNi4wMCBCdWlsZCAwKSAgLS0+CjxzdmcgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIiB4bWxuczp4bGluaz0iaHR0cDovL3d3dy53My5vcmcvMTk5OS94bGluayIgdmVyc2lvbj0iMS4xIiBpZD0iQ2FwYV8xIiB4PSIwcHgiIHk9IjBweCIgdmlld0JveD0iMCAwIDQ3MS4yIDQ3MS4yIiBzdHlsZT0iZW5hYmxlLWJhY2tncm91bmQ6bmV3IDAgMCA0NzEuMiA0NzEuMjsiIHhtbDpzcGFjZT0icHJlc2VydmUiIHdpZHRoPSI1MTJweCIgaGVpZ2h0PSI1MTJweCI+CjxnPgoJPGc+CgkJPHBhdGggZD0iTTIyNy42MTksNDQ0LjJoLTEyMi45Yy0zMy40LDAtNjAuNS0yNy4yLTYwLjUtNjAuNVY4Ny41YzAtMzMuNCwyNy4yLTYwLjUsNjAuNS02MC41aDEyNC45YzcuNSwwLDEzLjUtNiwxMy41LTEzLjUgICAgcy02LTEzLjUtMTMuNS0xMy41aC0xMjQuOWMtNDguMywwLTg3LjUsMzkuMy04Ny41LDg3LjV2Mjk2LjJjMCw0OC4zLDM5LjMsODcuNSw4Ny41LDg3LjVoMTIyLjljNy41LDAsMTMuNS02LDEzLjUtMTMuNSAgICBTMjM1LjAxOSw0NDQuMiwyMjcuNjE5LDQ0NC4yeiIgZmlsbD0iI0ZGRkZGRiIvPgoJCTxwYXRoIGQ9Ik00NTAuMDE5LDIyNi4xbC04NS44LTg1LjhjLTUuMy01LjMtMTMuOC01LjMtMTkuMSwwYy01LjMsNS4zLTUuMywxMy44LDAsMTkuMWw2Mi44LDYyLjhoLTI3My45Yy03LjUsMC0xMy41LDYtMTMuNSwxMy41ICAgIHM2LDEzLjUsMTMuNSwxMy41aDI3My45bC02Mi44LDYyLjhjLTUuMyw1LjMtNS4zLDEzLjgsMCwxOS4xYzIuNiwyLjYsNi4xLDQsOS41LDRzNi45LTEuMyw5LjUtNGw4NS44LTg1LjggICAgQzQ1NS4zMTksMjM5LjksNDU1LjMxOSwyMzEuMyw0NTAuMDE5LDIyNi4xeiIgZmlsbD0iI0ZGRkZGRiIvPgoJPC9nPgo8L2c+CjxnPgo8L2c+CjxnPgo8L2c+CjxnPgo8L2c+CjxnPgo8L2c+CjxnPgo8L2c+CjxnPgo8L2c+CjxnPgo8L2c+CjxnPgo8L2c+CjxnPgo8L2c+CjxnPgo8L2c+CjxnPgo8L2c+CjxnPgo8L2c+CjxnPgo8L2c+CjxnPgo8L2c+CjxnPgo8L2c+Cjwvc3ZnPgo=" />
-              </div>
-            </Icons>
+            <Nav>
+              <DesktopNav>
+                <NavItem>
+                  <Link to="/">
+                    <FontAwesomeIcon icon="headphones" /> Playlists
+                  </Link>
+                </NavItem>
+                <NavItemSeparator />
+                <NavItem>
+                  <Link to="/account">
+                    <FontAwesomeIcon icon="user" /> Profile
+                  </Link>
+                </NavItem>
+                <NavItemSeparator />
+                <NavItem>|</NavItem>
+                <NavItemSeparator />
+                <NavItem onClick={authContext.logout}><FontAwesomeIcon icon="sign-out-alt" /> Logout</NavItem>
+              </DesktopNav>
+              <MobileNav onClick={this.toggleSideNav}>
+                <FontAwesomeIcon icon="bars" />
+              </MobileNav>
+              <MobileSideNav show={this.state.sideNav}>
+                <CloseBtnContainer onClick={this.toggleSideNav}>
+                  <FontAwesomeIcon icon="times" />
+                </CloseBtnContainer>
+                <MobileSideNavLink to="/" onClick={this.toggleSideNav}>Playlists</MobileSideNavLink>
+                <MobileSideNavLink to="/account" onClick={this.toggleSideNav}>Profile</MobileSideNavLink>
+              </MobileSideNav>
+            </Nav>
           )}
           {!authContext.isAuth && (
             <LoginButtonContainer>
@@ -85,6 +109,10 @@ const Container = styled.div`
   justify-content: space-around;
   align-items: center;
   height: 100%;
+
+  @media (max-width: 500px) {
+    justify-content: space-between;
+  }
 `;
 
 const Logo = styled.div`
@@ -105,30 +133,83 @@ const Logo = styled.div`
   }
 `;
 
-const Icons = styled.div`
-  ${HeaderContainer} ${Container} & {
-    min-width: 85px;
-  }
+const Nav = styled.div`
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+`;
 
-  ${HeaderContainer} ${Container} & .block {
-    display: inline-block;
-  }
+const DesktopNav = styled.div`
+  display: flex;
+  flex-direction: row;
 
-  ${HeaderContainer} ${Container} & img {
-    margin: 0 15px 0;
-    display: block;
-    height: 25px;
-    width: 25px;
-
-    @media (max-width: 500px) {
-      width: 14px;
-      height: 14px;
-    }
+  @media (max-width: 500px) {
+    display: none;
   }
 `;
 
+const NavItem = styled.span`
+  font-weight: bold;
+  font-size: 18px;
+  cursor: pointer;
+
+  > a {
+    color: #fff;
+    text-decoration: none;
+  }
+`
+
+const NavItemSeparator = styled.div`
+  width: 30px;
+`;
+
+const MobileNav = styled.div`
+  display: none;
+  cursor: pointer;
+
+  @media (max-width: 500px) {
+    width: 20px;
+    height: 20px;
+    margin-top: -7px;
+    margin-right: 15px;
+    display: block;
+  }
+`;
+
+const MobileSideNav = styled.div<{ show: boolean; }>`
+  height: 100%; /* 100% Full-height */
+  width: ${props => props.show ? 250 : 0}px; /* 0 width - change this with JavaScript */
+  position: fixed; /* Stay in place */
+  z-index: 3; /* Stay on top */
+  top: 0; /* Stay at the top */
+  right: 0;
+  background-color: #000; /* Black*/
+  overflow-x: hidden; /* Disable horizontal scroll */
+  padding-top: 60px; /* Place content 60px from the top */
+  transition: 0.5s; /* 0.5 second transition effect to slide in the sidenav */
+`;
+
+const CloseBtnContainer = styled.div`
+  position: absolute;
+  top: 5px;
+  right: 10px;
+  font-size: 24px;
+  margin-left: 0;
+  color: #fff;
+`;
+
+const MobileSideNavLink = styled(Link)`
+  padding: 8px 8px 8px 32px;
+  text-decoration: none;
+  font-size: 25px;
+  color: #fff;
+  display: block;
+  transition: 0.3s;
+`;
+
 const LoginButtonContainer = styled.div`
-  margin-top: -10px;
+  margin-top: -7px;
+  margin-right: 15px;
 `
 
 const LoginButton = styled.button`
@@ -146,7 +227,6 @@ const LoginButton = styled.button`
 
   @media (max-width: 500px) {
     font-size: 8px;
-    margin-top: 7px;
   }
 
   &:hover {

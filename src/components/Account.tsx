@@ -43,23 +43,7 @@ class Account extends React.Component<any, State> {
       data
     } = this.state;
 
-    return (
-      <div>
-        <div>Account page YES!!!</div>
-        {isLoading ? (
-          <div>"Loading user data..."</div>
-        ) : (
-          <div>
-            <span>{data.name}</span>
-            <br />
-            <span>{data.email}</span>
-            <br />
-            <img src={data.avatar_url} width={200} height={200} />
-          </div>
-        )}
-        <Link to="/">Dashboard</Link>
-      </div>
-    );
+    return null;
   }
 }
 

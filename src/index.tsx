@@ -8,6 +8,11 @@ import { BrowserRouter as Router } from "react-router-dom";
 import { AuthProvider } from "./infrastructure/AuthContext";
 import { ProtectedRoute } from "./infrastructure/ProtectedRoute";
 
+import { library } from '@fortawesome/fontawesome-svg-core';
+import { faBars, faSignOutAlt, faHeadphones, faUser, faTimes } from '@fortawesome/free-solid-svg-icons';
+
+library.add(faBars, faSignOutAlt, faHeadphones, faUser, faTimes);
+
 const SpotifyDance = () => (
   <Router>
     <AuthProvider>
