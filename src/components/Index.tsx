@@ -21,9 +21,11 @@ class Index extends React.Component<any, any> {
           {children}
           {!authContext.isAuth && (
             <Hero>
-              <HeroTitle>Pick up your playlist and make your friends dance.</HeroTitle>
+              <HeroTitle>Pick up your playlist.</HeroTitle>
               <Separator />
-              <HeroTitleSecond>Share the experience.</HeroTitleSecond>
+              <HeroTitleSecond>Make your friends dance.</HeroTitleSecond>
+              <Separator />
+              <HeroTitleThird>Share the experience.</HeroTitleThird>
             </Hero>
           )}
         </Container>
@@ -61,13 +63,17 @@ const Hero = styled.div`
 `
 
 const HeroTitle = styled.span`
-  font-size: 4vmin;
+  font-size: 4.5vmin;
   color: #fff;
   font-weight: bold;
 `;
 
 const HeroTitleSecond = styled(HeroTitle)`
-  font-size: 3.5vmin;
+  font-size: 3vmin;
+`;
+
+const HeroTitleThird = styled(HeroTitle)`
+  font-size: 2.5vmin;
 `;
 
 const Separator = styled.div`
