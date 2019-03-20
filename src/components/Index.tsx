@@ -44,8 +44,4 @@ const Container = styled.div`
   min-height: 100%;
   overflow: scroll;
   background-image: linear-gradient(90deg, #C074B2, #8AB5E8);
-
-  @media (max-width: 500px) {
-    overflow: hidden;
-  }
 `;

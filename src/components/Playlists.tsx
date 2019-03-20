@@ -31,6 +31,8 @@ class Playlists extends React.Component<any, any> {
   scrollEventHandler = () => {
     const { hasMore } = this.state;
 
+    console.log(11);
+
     let scrollHeight, totalHeight;
     scrollHeight = document.body.scrollHeight;
     totalHeight = window.scrollY + window.innerHeight;
@@ -89,7 +91,7 @@ export default withAuthContext(Playlists);
 const Container = styled.div`
   display: grid;
   margin-top: 100px;
-  height: 100%;
+  // height: 100%;
   grid-template-columns: auto auto auto auto;
   // grid-gap: 10px;
   justify-content: space-evenly;
@@ -108,12 +110,9 @@ const Container = styled.div`
 
     display: flex;
     flex-direction: row;
+    min-width: 100%;
+    min-height: 100%;
     justify-content: flex-start;
-    overflow-y: hidden;
-    ::-webkit-scrollbar {
-      width: 0px;  /* remove scrollbar space */
-      background: transparent;  /* optional: just make scrollbar invisible */
-    }
   }
 `;
 

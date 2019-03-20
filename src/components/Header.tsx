@@ -76,6 +76,7 @@ const HeaderContainer = styled.header`
   @media (max-width: 500px) {
     height: 50px;
     background-color: rgba(8, 8, 8, 0.9);
+    transition: none;
   }
 `;
 
