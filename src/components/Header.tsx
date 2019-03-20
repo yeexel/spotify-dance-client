@@ -188,16 +188,20 @@ const MobileNav = styled.div`
 `;
 
 const MobileSideNav = styled.div<{ show: boolean; }>`
-  height: 100%; /* 100% Full-height */
-  width: ${props => props.show ? 250 : 0}px; /* 0 width - change this with JavaScript */
-  position: fixed; /* Stay in place */
-  z-index: 3; /* Stay on top */
-  top: 0; /* Stay at the top */
-  right: 0;
-  background-color: #000; /* Black*/
-  overflow-x: hidden; /* Disable horizontal scroll */
-  padding-top: 60px; /* Place content 60px from the top */
-  transition: 0.5s; /* 0.5 second transition effect to slide in the sidenav */
+  display: none;
+
+  @media (max-width: 500px) {
+    height: 100%; /* 100% Full-height */
+    width: ${props => props.show ? 250 : 0}px; /* 0 width - change this with JavaScript */
+    position: fixed; /* Stay in place */
+    z-index: 3; /* Stay on top */
+    top: 0; /* Stay at the top */
+    right: 0;
+    background-color: #000; /* Black*/
+    overflow-x: hidden; /* Disable horizontal scroll */
+    padding-top: 60px; /* Place content 60px from the top */
+    transition: 0.5s; /* 0.5 second transition effect to slide in the sidenav */
+  }
 `;
 
 const CloseBtnContainer = styled.div`
