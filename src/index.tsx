@@ -3,6 +3,7 @@ import ReactDOM from "react-dom";
 import Index from "./components/Index";
 import Account from "./components/Account";
 import Playlists from "./components/Playlists";
+import PlaylistView from "./components/PlaylistView";
 import * as serviceWorker from "./serviceWorker";
 import { BrowserRouter as Router } from "react-router-dom";
 import { AuthProvider } from "./infrastructure/AuthContext";
@@ -18,6 +19,7 @@ const SpotifyDance = () => (
     <AuthProvider>
       <Index>
         <ProtectedRoute exact path="/" component={Playlists} />
+        <ProtectedRoute exact path="/playlist/:id" component={PlaylistView} />
         <ProtectedRoute exact path="/account" component={Account} />
       </Index>
     </AuthProvider>

@@ -51,7 +51,7 @@ class Playlists extends React.Component<any, any> {
       <Container>
         {playlists.map((playlist: any, index: number) => {
           return (
-            <PlaylistContainer key={playlist.id} firstChild={index === 0}>
+            <PlaylistContainer onClick={() => this.props.history.push(`/playlist/${playlist.id}`)} key={playlist.id} firstChild={index === 0}>
               <PlaylistImage src={playlist.images[0].url} />
               <RecordImage style={{ position: 'absolute' }} id="rec" width="250" height="250" src={Record} />
               <PlaylistTitle>{playlist.name}</PlaylistTitle>

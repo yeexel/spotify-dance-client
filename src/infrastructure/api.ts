@@ -40,4 +40,14 @@ const getPlaylists = async (limit: number, offset: number, token: string) => {
   return playlistData.data;
 };
 
-export { getAccount, getPlaylists };
+const getPlaylist = async (id: string, token: string) => {
+  const singlePlaylistData = await axios.get(`${API_BASE_URL}/playlist?id=${id}`, {
+    headers: {
+      Authorization: `Bearer ${token}`
+    }
+  });
+
+  return singlePlaylistData.data;
+}
+
+export { getAccount, getPlaylists, getPlaylist };

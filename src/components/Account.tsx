@@ -57,7 +57,7 @@ class Account extends React.Component<any, State> {
           <Country src={`https://www.countryflags.io/${data.country.toLowerCase()}/flat/32.png`} />
         </LeftSection>
         <RightSection>
-          <ZeroPlaylistsRated>You haven't rated any playlist yet.</ZeroPlaylistsRated>
+          <ZeroPlaylistsRated>You haven't shared any playlists yet.</ZeroPlaylistsRated>
         </RightSection>
       </Container>
     );
@@ -98,7 +98,7 @@ const Avatar = styled.img`
   border: 2px solid #fff;
 `;
 
-const DisplayName = styled.div`
+const DisplayName = styled.span`
   margin-top: 10px;
   color: #fff;
   font-weight: bold;
