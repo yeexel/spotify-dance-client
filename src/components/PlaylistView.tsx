@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import styled from "styled-components";
-import { getPlaylist } from "../infrastructure/api";
+import { getPlaylist, analyzePlaylist } from "../infrastructure/api";
 import { withAuthContext } from "../infrastructure/AuthContext";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
@@ -36,6 +36,14 @@ class PlaylistView extends Component<any ,State> {
     });
   }
 
+  _analyzePlaylist = async () => {
+    const { authContext, match: { params: { id: playlistId } } } = this.props;
+
+    const danceability = await analyzePlaylist(playlistId, authContext.authToken);
+
+    alert(danceability);
+  }
+
   render() {
     const { playlist, isLoading, showDescription } = this.state;
 
@@ -44,6 +52,8 @@ class PlaylistView extends Component<any ,State> {
     }
 
     const currentPlaylist: any = playlist;
+
+    const hasMoreThan100Tracks = currentPlaylist.tracks.total > 100;
 
     return (
       <Container>
@@ -57,7 +67,7 @@ class PlaylistView extends Component<any ,State> {
             </React.Fragment>
           )}
           <BtnWrapper>
-            <AnalyzeBtn><FontAwesomeIcon icon="cogs" /> Analyze</AnalyzeBtn>
+            <AnalyzeBtn onClick={this._analyzePlaylist} show={!hasMoreThan100Tracks}><FontAwesomeIcon icon="cogs" /> Analyze</AnalyzeBtn>
             <ListenOnSpotifyBtn href={currentPlaylist.uri}><FontAwesomeIcon icon="music" /> Play on Spotify</ListenOnSpotifyBtn>
           </BtnWrapper>
         </LeftSection>
@@ -65,16 +75,16 @@ class PlaylistView extends Component<any ,State> {
           <Separator />
           <React.Fragment>
             {currentPlaylist.danceability === -1 ? (
-              <PlaylistInfoLine><PlaylistInfoLineSubject>Analyze</PlaylistInfoLineSubject> this playlist to get danceability data.</PlaylistInfoLine>
+              <PlaylistInfoLine show={!hasMoreThan100Tracks}><PlaylistInfoLineSubject>Analyze</PlaylistInfoLineSubject> this playlist to get danceability data.</PlaylistInfoLine>
             ) : (
-              <PlaylistInfoLine>You <PlaylistInfoLineSubject>{`${currentPlaylist.danceability >= 65 ? 'will probably' : 'might not'}`}</PlaylistInfoLineSubject> enjoy dancing to this playlist.</PlaylistInfoLine>
+              <PlaylistInfoLine show={!hasMoreThan100Tracks}>You <PlaylistInfoLineSubject>{`${currentPlaylist.danceability >= 65 ? 'will probably' : 'might not'}`}</PlaylistInfoLineSubject> enjoy dancing to this playlist.</PlaylistInfoLine>
             )}
           </React.Fragment>
-          <PlaylistInfoLine><PlaylistInfoLineSubject>{`${currentPlaylist.tracks.total}`}</PlaylistInfoLineSubject> {`${currentPlaylist.tracks.total == 1 ? 'track' : 'tracks'}`} can be found inside.</PlaylistInfoLine>
-          <PlaylistInfoLine>
+          <PlaylistInfoLine show={true}><PlaylistInfoLineSubject>{`${currentPlaylist.tracks.total}`}</PlaylistInfoLineSubject> {`${currentPlaylist.tracks.total == 1 ? 'track' : 'tracks'}`} can be found inside.</PlaylistInfoLine>
+          <PlaylistInfoLine show={true}>
             This playlist has <PlaylistInfoLineSubject>{`${currentPlaylist.followers.total}`}</PlaylistInfoLineSubject> {`${currentPlaylist.followers.total == 1 ? 'follower' : 'followers'}`}.
           </PlaylistInfoLine>
-          <PlaylistInfoLine>It was created by <PlaylistInfoLineSubject>{`${currentPlaylist.created_by_user ? 'you' : currentPlaylist.owner.display_name}`}</PlaylistInfoLineSubject>.</PlaylistInfoLine>
+          <PlaylistInfoLine show={true}>It was created by <PlaylistInfoLineSubject>{`${currentPlaylist.created_by_user ? 'you' : currentPlaylist.owner.display_name}`}</PlaylistInfoLineSubject>.</PlaylistInfoLine>
         </RightSection>
       </Container>
     );
@@ -145,7 +155,7 @@ const DescriptionToggle = styled(PlaylistName)`
   cursor: pointer;
 `;
 
-const PlaylistDescription = styled(PlaylistName)<{show: boolean;}>`
+const PlaylistDescription = styled(PlaylistName)<{show?: boolean;}>`
   color: #e3e3e3;
   font-size: 16px;
   max-width: 250px;
@@ -170,10 +180,11 @@ const RightSection = styled.div`
   }
 `;
 
-const PlaylistInfoLine = styled.span`
+const PlaylistInfoLine = styled.span<{ show: boolean; }>`
   align-self: center;
   color: #fff;
   font-size: 26px;
+  display: ${props => props.show ? 'display' : 'none'};
 
   @media (max-width: 500px) {
     font-size: 16px;
@@ -241,6 +252,6 @@ const ListenOnSpotifyBtn = styled.a`
   }
 `;
 
-const AnalyzeBtn = styled(ListenOnSpotifyBtn)`
-
+const AnalyzeBtn = styled(ListenOnSpotifyBtn)<{ show: boolean; }>`
+  display: ${props => props.show ? 'display' : 'none'};
 `
