@@ -102,6 +102,7 @@ const Container = styled.div`
 
   @media (max-width: 500px) {
     grid-template-columns: auto;
+    margin-top: 80px;
 
     // display: flex;
     // flex-direction: row;
@@ -131,6 +132,7 @@ const PlaylistContainer = styled.div<{ firstChild: boolean }>`
   }
 
   @media (max-width: 500px) {
+    height:300px;
     // margin-left: ${props => props.firstChild ? Math.ceil((document.documentElement.clientWidth - 250) / 2) - 10 : 0}px;
   }
 `
