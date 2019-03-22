@@ -10,6 +10,28 @@ interface State {
   showDescription: boolean
 }
 
+function parseTime(millisec: number): object {
+  // @ts-ignore
+  const normalizeTime = (time: string): string => (time.length === 1) ? time.padStart(2, '0') : time;
+
+  let seconds: string = (millisec / 1000).toFixed(0);
+  let minutes: string = Math.floor(parseInt(seconds) / 60).toString();
+  let hours: string = '';
+
+  if (parseInt(minutes) > 59) {
+    hours = normalizeTime(Math.floor(parseInt(minutes) / 60).toString());
+    minutes = normalizeTime((parseInt(minutes) - (parseInt(hours) * 60)).toString());
+  }
+  seconds = normalizeTime(Math.floor(parseInt(seconds) % 60).toString());
+
+  return {
+    hours: +hours,
+    minutes: +minutes,
+    seconds: +seconds,
+    ms: millisec
+  }
+ }
+
 class PlaylistView extends Component<any ,State> {
   state = {
     playlist: {},
@@ -53,12 +75,31 @@ class PlaylistView extends Component<any ,State> {
 
     const currentPlaylist: any = playlist;
 
-    const hasMoreThan100Tracks = currentPlaylist.tracks.total > 100;
+    const hasMoreThan100Tracks = currentPlaylist.tracks > 100;
+
+    const parsedTime: any = parseTime(currentPlaylist.duration_ms);
+
+    let playTimeHours = null;
+    let playTimeMinutes = null;
+
+    if (parsedTime.hours > 0) {
+      playTimeHours = (
+        <React.Fragment>
+          <PlaylistInfoLineSubject>{parsedTime.hours}</PlaylistInfoLineSubject> {`${parsedTime.hours === 1 ? 'hour' : 'hours'}`} and
+        </React.Fragment>
+      )
+    }
+
+    playTimeMinutes = (
+      <React.Fragment>
+        <PlaylistInfoLineSubject>{parsedTime.minutes}</PlaylistInfoLineSubject> {`${parsedTime.minutes === 1 ? 'minute' : 'minutes'}`}
+      </React.Fragment>
+    )
 
     return (
       <Container>
         <LeftSection>
-          <CoverImage src={currentPlaylist.images[0].url} />
+          <CoverImage src={currentPlaylist.cover_image} />
           <PlaylistName>{currentPlaylist.name}</PlaylistName>
           {currentPlaylist.description && (
             <React.Fragment>
@@ -67,24 +108,24 @@ class PlaylistView extends Component<any ,State> {
             </React.Fragment>
           )}
           <BtnWrapper>
-            <AnalyzeBtn onClick={this._analyzePlaylist} show={!hasMoreThan100Tracks}><FontAwesomeIcon icon="cogs" /> Analyze</AnalyzeBtn>
+            {/* <AnalyzeBtn onClick={this._analyzePlaylist} show={!hasMoreThan100Tracks}><FontAwesomeIcon icon="cogs" /> Analyze</AnalyzeBtn> */}
             <ListenOnSpotifyBtn href={currentPlaylist.uri}><FontAwesomeIcon icon="music" /> Play on Spotify</ListenOnSpotifyBtn>
           </BtnWrapper>
         </LeftSection>
         <RightSection>
           <Separator />
+          <PlaylistInfoLine show={true}><PlaylistInfoLineSubject>{`${currentPlaylist.tracks}`}</PlaylistInfoLineSubject> {`${currentPlaylist.tracks == 1 ? 'track' : 'tracks'}`} and <PlaylistInfoLineSubject>{`${currentPlaylist.followers}`}</PlaylistInfoLineSubject> {`${currentPlaylist.followers == 1 ? 'follower' : 'followers'}`}</PlaylistInfoLine>
           <React.Fragment>
-            {currentPlaylist.danceability === -1 ? (
-              <PlaylistInfoLine show={!hasMoreThan100Tracks}><PlaylistInfoLineSubject>Analyze</PlaylistInfoLineSubject> this playlist to get danceability data.</PlaylistInfoLine>
-            ) : (
-              <PlaylistInfoLine show={!hasMoreThan100Tracks}>You <PlaylistInfoLineSubject>{`${currentPlaylist.danceability >= 65 ? 'will probably' : 'might not'}`}</PlaylistInfoLineSubject> enjoy dancing to this playlist.</PlaylistInfoLine>
-            )}
+            {currentPlaylist.danceability !== -1 ? (
+              <PlaylistInfoLine show={true}>Play time is {playTimeHours} {playTimeMinutes}</PlaylistInfoLine>
+            ) : null}
           </React.Fragment>
-          <PlaylistInfoLine show={true}><PlaylistInfoLineSubject>{`${currentPlaylist.tracks.total}`}</PlaylistInfoLineSubject> {`${currentPlaylist.tracks.total == 1 ? 'track' : 'tracks'}`} can be found inside.</PlaylistInfoLine>
-          <PlaylistInfoLine show={true}>
-            This playlist has <PlaylistInfoLineSubject>{`${currentPlaylist.followers.total}`}</PlaylistInfoLineSubject> {`${currentPlaylist.followers.total == 1 ? 'follower' : 'followers'}`}.
-          </PlaylistInfoLine>
-          <PlaylistInfoLine show={true}>It was created by <PlaylistInfoLineSubject>{`${currentPlaylist.created_by_user ? 'you' : currentPlaylist.owner.display_name}`}</PlaylistInfoLineSubject>.</PlaylistInfoLine>
+          <React.Fragment>
+            {currentPlaylist.danceability !== -1 ? (
+              <PlaylistInfoLine show={true}>Danceability is <PlaylistInfoLineSubject>{currentPlaylist.danceability}%</PlaylistInfoLineSubject></PlaylistInfoLine>
+            ) : null}
+          </React.Fragment>
+          <PlaylistInfoLine show={true}>Created by <PlaylistInfoLineSubject>{`${currentPlaylist.owner}`}</PlaylistInfoLineSubject></PlaylistInfoLine>
         </RightSection>
       </Container>
     );
