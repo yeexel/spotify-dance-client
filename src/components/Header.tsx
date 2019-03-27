@@ -2,7 +2,7 @@ import * as React from "react";
 import styled from "styled-components";
 import { Link } from "react-router-dom";
 import { withAuthContext } from "../infrastructure/AuthContext";
-import LogoT from "../img/logo_t.png";
+import PlaylistaLogo from "../img/playlista.png";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 class Header extends React.Component<any, any> {
@@ -25,7 +25,7 @@ class Header extends React.Component<any, any> {
   scrollEventListener = () => {
     const headerEl = document.getElementsByTagName("header")[0];
 
-    if (window.pageYOffset > 50) {
+    if (window.pageYOffset > 30) {
       headerEl.style.background = "rgba(8, 8, 8, 1)";
       headerEl.style.transition = "background-color 200ms linear";
     } else {
@@ -39,9 +39,11 @@ class Header extends React.Component<any, any> {
     return (
       <HeaderContainer>
         <Container>
-          <Logo>
-            <img src={LogoT} />
-          </Logo>
+          <Link to="/">
+            <Logo>
+              <img src={PlaylistaLogo} />
+            </Logo>
+          </Link>
           {authContext.isAuth && (
             <Nav>
               <DesktopNav>
@@ -121,21 +123,22 @@ const Container = styled.div`
 `;
 
 const Logo = styled.div`
-  margin-top: -10px;
+  margin-top: 5px;
+  cursor: pointer;
 
   > img {
-    width: 150px;
-    height: 150px;
+    width: 110px;
+    height: 110px;
 
     @media (max-width: 500px) {
-      width: 90px;
-      height: 90px;
+      width: 70px;
+      height: 70px;
     }
   }
 
-  @media (max-width: 500px) {
-    margin-top: -5px;
-  }
+  // @media (max-width: 500px) {
+  //   // margin-top: 0;
+  // }
 `;
 
 const Nav = styled.div`
@@ -195,7 +198,7 @@ const MobileSideNav = styled.div<{ show: boolean; }>`
     height: 100%; /* 100% Full-height */
     width: ${props => props.show ? 250 : 0}px; /* 0 width - change this with JavaScript */
     position: fixed; /* Stay in place */
-    z-index: 3; /* Stay on top */
+    z-index: 99999; /* Stay on top */
     top: 0; /* Stay at the top */
     right: 0;
     background-color: #000; /* Black*/

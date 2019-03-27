@@ -10,9 +10,9 @@ import { AuthProvider } from "./infrastructure/AuthContext";
 import { ProtectedRoute } from "./infrastructure/ProtectedRoute";
 
 import { library } from '@fortawesome/fontawesome-svg-core';
-import { faBars, faSignOutAlt, faHeadphones, faUser, faTimes, faAngleUp, faAngleDown, faCogs, faMusic } from '@fortawesome/free-solid-svg-icons';
+import { faBars, faSignOutAlt, faHeadphones, faUser, faTimes, faAngleUp, faAngleDown, faShareSquare, faMusic } from '@fortawesome/free-solid-svg-icons';
 
-library.add(faBars, faSignOutAlt, faHeadphones, faUser, faTimes, faAngleUp, faAngleDown, faCogs, faMusic);
+library.add(faBars, faSignOutAlt, faHeadphones, faUser, faTimes, faAngleUp, faAngleDown, faShareSquare, faMusic);
 
 const SpotifyDance = () => (
   <Router>

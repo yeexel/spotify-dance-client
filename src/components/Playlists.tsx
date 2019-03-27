@@ -3,6 +3,7 @@ import styled from "styled-components";
 import { getPlaylists } from "../infrastructure/api";
 import { withAuthContext } from "../infrastructure/AuthContext";
 import Record from "../img/record.png";
+import posed from 'react-pose';
 
 class Playlists extends React.Component<any, any> {
   state = {
@@ -16,8 +17,8 @@ class Playlists extends React.Component<any, any> {
 
   el: any;
 
-  componentDidMount() {
-    this._fetchPlaylists();
+  async componentDidMount() {
+    await this._fetchPlaylists();
 
     this.setState({ initialLoad: false })
 
@@ -43,23 +44,22 @@ class Playlists extends React.Component<any, any> {
   render() {
     const { playlists, isLoading, initialLoad } = this.state;
 
-    if (initialLoad) {
-      return null;
-    }
+    // if (initialLoad) {
+    //   return null;
+    // }
 
     return (
-      <Container>
-        {playlists.map((playlist: any, index: number) => {
-          return (
-            <PlaylistContainer onClick={() => this.props.history.push(`/playlist/${playlist.id}`)} key={playlist.id} firstChild={index === 0}>
-              <PlaylistImage src={playlist.images[0].url} />
-              <RecordImage style={{ position: 'absolute' }} id="rec" width="250" height="250" src={Record} />
-              <PlaylistTitle>{playlist.name}</PlaylistTitle>
-              {/* <PlaylistCreatedBy>Created by <a style={{ color: '#fff', textDecoration: 'none' }} href={playlist.owner.uri}>{playlist.owner.display_name}</a></PlaylistCreatedBy> */}
-            </PlaylistContainer>
-          )
-        })}
-      </Container>
+      <Container pose={initialLoad ? 'closed' : 'open'}>
+          {playlists.map((playlist: any, index: number) => {
+            return (
+              <PlaylistContainer onClick={() => this.props.history.push(`/playlist/${playlist.id}`)} key={playlist.id} firstChild={index === 0}>
+                <PlaylistImage src={playlist.images[0].url} />
+                <RecordImage style={{ position: 'absolute' }} id="rec" width="250" height="250" src={Record} />
+                <PlaylistTitle>{playlist.name}</PlaylistTitle>
+              </PlaylistContainer>
+            )
+          })}
+        </Container>
     );
   }
 
@@ -86,7 +86,12 @@ class Playlists extends React.Component<any, any> {
 
 export default withAuthContext(Playlists);
 
-const Container = styled.div`
+const AnimatedContainer = posed.div({
+  open: { opacity: 1 },
+  closed: { opacity: 0 }
+});
+
+const Container = styled(AnimatedContainer)`
   display: grid;
   margin-top: 100px;
   grid-template-columns: auto auto auto auto;

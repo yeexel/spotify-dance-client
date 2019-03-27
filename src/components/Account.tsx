@@ -2,6 +2,7 @@ import * as React from "react";
 import styled from "styled-components";
 import { getAccount } from "../infrastructure/api";
 import { withAuthContext } from "../infrastructure/AuthContext";
+import posed from 'react-pose';
 
 interface State {
   data: {
@@ -45,12 +46,12 @@ class Account extends React.Component<any, State> {
       data
     } = this.state;
 
-    if (isLoading) {
-      return null;
-    }
+    // if (isLoading) {
+    //   return null;
+    // }
 
     return (
-      <Container>
+      <Container pose={isLoading ? 'closed' : 'open'}>
         <LeftSection>
           <Avatar src={data.avatar_url} />
           <DisplayName>{data.name}</DisplayName>
@@ -66,7 +67,12 @@ class Account extends React.Component<any, State> {
 
 export default withAuthContext(Account);
 
-const Container = styled.div`
+const AnimatedContainer = posed.div({
+  open: { opacity: 1 },
+  closed: { opacity: 0 }
+});
+
+const Container = styled(AnimatedContainer)`
   margin-top: 150px;
   display: flex;
   flex-direction: row;

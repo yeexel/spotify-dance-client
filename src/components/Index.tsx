@@ -21,11 +21,11 @@ class Index extends React.Component<any, any> {
           {children}
           {!authContext.isAuth && (
             <Hero>
-              <HeroTitle>Pick up your playlist.</HeroTitle>
+              <HeroTitle>Rediscover your playlist.</HeroTitle>
               <Separator />
-              <HeroTitleSecond>Make your friends dance.</HeroTitleSecond>
+              <HeroTitleSecond>Get music taste insights.</HeroTitleSecond>
               <Separator />
-              <HeroTitleThird>Share the experience.</HeroTitleThird>
+              <HeroTitleThird>Share with a world.</HeroTitleThird>
             </Hero>
           )}
         </Container>
