@@ -17,7 +17,7 @@ service.register({
 
 const API_BASE_URL =
   process.env.NODE_ENV === "production"
-    ? "https://spotify-dance-api.herokuapp.com/api"
+    ? "https://api.playlista.co/api"
     : "http://localhost:5000/api";
 
 const getAccount = async (token: string) => {
