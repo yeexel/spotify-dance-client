@@ -10,7 +10,8 @@ interface State {
   playlist: object,
   isLoading: boolean,
   showDescription: boolean,
-  gradient: any
+  gradient: any,
+  valenceString: string
 }
 
 function parseTime(millisec: number): object {
@@ -40,7 +41,8 @@ class PlaylistView extends Component<any ,State> {
     playlist: {},
     isLoading: true,
     showDescription: false,
-    gradient: undefined
+    gradient: undefined,
+    valenceString: ""
   }
 
   componentDidMount() {
@@ -58,7 +60,8 @@ class PlaylistView extends Component<any ,State> {
 
     this.setState({
       playlist: playlistData,
-      isLoading: false
+      isLoading: false,
+      valenceString: getValenceString(playlistData.valence)
     }, this._analyzeImageData);
   }
 
@@ -165,7 +168,7 @@ class PlaylistView extends Component<any ,State> {
   }
 
   render() {
-    const { playlist, isLoading, showDescription } = this.state;
+    const { playlist, isLoading, showDescription, valenceString } = this.state;
 
     // if (isLoading) {
     //   return null;
@@ -231,7 +234,7 @@ class PlaylistView extends Component<any ,State> {
           </React.Fragment>
           <React.Fragment>
             {!hasMoreThan100Tracks && currentPlaylist.valence ? (
-              <PlaylistInfoLine show={true}>Sounds <PlaylistInfoLineSubject>{getValenceString(currentPlaylist.valence)}.</PlaylistInfoLineSubject></PlaylistInfoLine>
+              <PlaylistInfoLine show={true}>Sounds <PlaylistInfoLineSubject>{valenceString}.</PlaylistInfoLineSubject></PlaylistInfoLine>
             ) : null}
           </React.Fragment>
           <React.Fragment>
