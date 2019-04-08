@@ -1,2 +1,2 @@
 alias:
-	now alias $(url) spotify-dance-client
+	now alias $(url) playlista.co
