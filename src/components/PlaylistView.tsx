@@ -4,7 +4,8 @@ import { getPlaylist, analyzePlaylist } from "../infrastructure/api";
 import { withAuthContext } from "../infrastructure/AuthContext";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import posed from 'react-pose';
-import { tween } from "popmotion";
+import { tween, spring } from "popmotion";
+import Chart from "react-apexcharts";
 
 interface State {
   playlist: object,
@@ -216,8 +217,76 @@ class PlaylistView extends Component<any ,State> {
             {/* <AnalyzeBtn onClick={() => {}} show={!hasMoreThan100Tracks}><FontAwesomeIcon icon="share-square" /> Share Insights</AnalyzeBtn> */}
           </BtnWrapper>
         </LeftSection>
-        <RightSection pose={isLoading ? 'closed' : 'open'}>
-          <Separator />
+        {!hasMoreThan100Tracks ? (
+          <RightMostSection pose={isLoading ? 'closed' : 'open'}>
+          <Chart
+              series={[currentPlaylist.danceability || 0, currentPlaylist.energy || 0, currentPlaylist.valence || 0]}
+              width={350}
+              height={350}
+              options={
+                {
+                  labels: ['Danceability', 'Energy', 'Positiveness'],
+                  plotOptions: {
+                    radialBar: {
+                        offsetY: -30,
+                        startAngle: 0,
+                        endAngle: 270,
+                        hollow: {
+                            margin: 5,
+                            size: '30%',
+                            background: 'transparent',
+                            image: undefined,
+                        },
+                        dataLabels: {
+                            name: {
+                                show: false,
+                                // fontSize: '22px',
+
+                            },
+                            value: {
+                                show: false,
+                                // fontSize: '16px',
+                            },
+                          //   total: {
+                          //     show: true,
+                          //     label: 'Hover on ring',
+                          //     formatter: function (w: any) {
+                          //         // By default this function returns the average of all series. The below is just an example to show the use of custom formatter function
+                          //         return "to see more"
+                          //     }
+                          // }
+                        }
+                    }
+                },
+                colors: ['#4e007d', '#3a4688', '#182c2f'],
+                  legend: {
+                    show: true,
+                    floating: true,
+                    fontSize: '16px',
+                    fontFamily: 'KoHo',
+                    position: 'right',
+                    offsetX: 140,
+                    offsetY: 35,
+                    labels: {
+                        useSeriesColors: true,
+                    },
+                    markers: {
+                        size: 0
+                    },
+                    formatter: function(seriesName: any, opts: any) {
+                        return seriesName + ":  " + opts.w.globals.series[opts.seriesIndex] + "%"
+                    },
+                    itemMargin: {
+                        horizontal: 1,
+                    }
+                },
+                }
+              }
+            type="radialBar" />
+        </RightMostSection>
+        ) : null}
+        <RightSection moreTracks={hasMoreThan100Tracks} pose={isLoading ? 'closed' : 'open'}>
+          {hasMoreThan100Tracks ? <Separator /> : null}
           <PlaylistInfoLine show={true}>This playlist has</PlaylistInfoLine>
           <PlaylistInfoLine show={true}><PlaylistInfoLineSubject>{`${currentPlaylist.tracks}`}</PlaylistInfoLineSubject> {`${currentPlaylist.tracks == 1 ? 'track' : 'tracks'}`} and <PlaylistInfoLineSubject>{`${currentPlaylist.followers}`}</PlaylistInfoLineSubject> {`${currentPlaylist.followers == 1 ? 'follower' : 'followers'}`}.</PlaylistInfoLine>
           {!hasMoreThan100Tracks && <TitleSectionSeparator />}
@@ -289,6 +358,7 @@ const Container = styled.div`
   margin-top: 150px;
   display: flex;
   flex-direction: row;
+  justify-content: space-around;
 
   a {
     color: #fff;
@@ -309,7 +379,7 @@ const LeftSectionAnimated = posed.div({
 });
 
 const LeftSection = styled(LeftSectionAnimated)`
-  width: 40%;
+  // width: 20%;
   // background-color: #fff;
   display: flex;
   flex-direction: column;
@@ -390,14 +460,34 @@ const RightSectionAnimated = posed.div({
   closed: { opacity: 0, x: "100%" }
 });
 
-const RightSection = styled(RightSectionAnimated)`
-  width: 60%;
+const RightSection = styled(RightSectionAnimated)<{moreTracks?: boolean;}>`
+  // width: 60%;
   display: flex;
   // background-color: #e3e3e3;
   align-items: center;
   flex-direction: column;
   justify-content: center;
   height: 350px;
+  z-index: 1;
+
+  @media (max-width: 500px) {
+    width: auto;
+    margin-top: ${props => props.moreTracks ? '30px': 0};
+    height: auto;
+  }
+`;
+
+const RightMostSectionAnimated = posed.div({
+  open: { opacity: 1, transition: (props: any) => tween({ ...props, duration: "500" }) },
+  closed: { opacity: 0,  }
+});
+
+
+const RightMostSection = styled(RightMostSectionAnimated)`
+  // width: 20%;
+  align-items: center;
+  flex-direction: column;
+  // height: 350px;
   z-index: 1;
 
   @media (max-width: 500px) {

@@ -136,9 +136,9 @@ const Logo = styled.div`
     }
   }
 
-  // @media (max-width: 500px) {
-  //   // margin-top: 0;
-  // }
+  @media (max-width: 500px) {
+    margin-left: 5px;
+  }
 `;
 
 const Nav = styled.div`
