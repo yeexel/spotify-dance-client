@@ -489,6 +489,7 @@ const RightMostSection = styled(RightMostSectionAnimated)`
   flex-direction: column;
   // height: 350px;
   z-index: 1;
+  margin-top: -30px;
 
   @media (max-width: 500px) {
     width: auto;
