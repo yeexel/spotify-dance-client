@@ -9,7 +9,7 @@
     }
   ],
   "routes": [
-    { "src": "^/static/(.*)", "headers": {":status": "206"}, "dest": "/static/$1" },
+    { "src": "^/static/(.*)", "headers": {":status": "200"}, "dest": "/static/$1" },
     { "src": "^/static/*.@(mp4)", "headers": {"accept-ranges": "bytes"}, "dest": "/static/$1" },
     { "src": "^/favicon.ico", "dest": "/favicon.ico" },
     { "src": "^/manifest.json", "dest": "/manifest.json" },
