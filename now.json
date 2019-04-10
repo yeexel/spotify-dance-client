@@ -7,7 +7,7 @@
       "use": "@now/static-build",
       "config": { "distDir": "build" }
     },
-    { "src": "*.mp4", "use": "@now/node" }
+    { "src": "src/img/*.mp4", "use": "@now/node" }
   ],
   "routes": [
     { "src": "^/static/(.*)", "dest": "/static/$1" },
