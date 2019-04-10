@@ -6,11 +6,11 @@
       "src": "package.json",
       "use": "@now/static-build",
       "config": { "distDir": "build" }
-    },
-    { "src": "src/img/*.mp4", "use": "@now/node" }
+    }
   ],
   "routes": [
     { "src": "^/static/(.*)", "dest": "/static/$1" },
+    { "src": "^/static/media/*.*.mp4", "status": 206, "dest": "/static/$1" },
     { "src": "^/favicon.ico", "dest": "/favicon.ico" },
     { "src": "^/manifest.json", "dest": "/manifest.json" },
     { "src": "^/(.*)", "dest": "/index.html" }
