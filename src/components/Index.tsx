@@ -8,17 +8,6 @@ class Index extends React.Component<any, any> {
     const { authContext } = this.props;
 
     authContext.setAuthToken();
-
-    // @ts-ignore
-    document.getElementById("myVideo").play();
-  }
-
-  componentDidUpdate() {
-    // @ts-ignore
-    if (document.getElementById("myVideo")) {
-      // @ts-ignore
-      document.getElementById("myVideo").play();
-    }
   }
 
   render() {
@@ -30,7 +19,7 @@ class Index extends React.Component<any, any> {
         <Container auth={authContext.isAuth}>
           <Header />
           {!authContext.isAuth && (
-            <video muted loop id="myVideo">
+            <video autoPlay playsinline muted loop id="myVideo">
               <source src={require("../img/video2.mp4")} type="video/mp4" />
             </video>
           )}
