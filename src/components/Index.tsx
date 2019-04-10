@@ -8,6 +8,17 @@ class Index extends React.Component<any, any> {
     const { authContext } = this.props;
 
     authContext.setAuthToken();
+
+    // @ts-ignore
+    document.getElementById("myVideo").play();
+  }
+
+  componentDidUpdate() {
+    // @ts-ignore
+    if (document.getElementById("myVideo")) {
+      // @ts-ignore
+      document.getElementById("myVideo").play();
+    }
   }
 
   render() {
@@ -16,16 +27,21 @@ class Index extends React.Component<any, any> {
     return (
       <React.Fragment>
         <GlobalStyle />
-        <Container>
+        <Container auth={authContext.isAuth}>
           <Header />
+          {!authContext.isAuth && (
+            <video muted loop id="myVideo">
+              <source src={require("../img/video2.mp4")} type="video/mp4" />
+            </video>
+          )}
           {children}
           {!authContext.isAuth && (
             <Hero>
               <HeroTitle>Rediscover your playlist.</HeroTitle>
               <Separator />
-              <HeroTitleSecond>Get music taste insights.</HeroTitleSecond>
+              <HeroTitleSecond>Analyze music taste.</HeroTitleSecond>
               <Separator />
-              <HeroTitleThird>Share with a world.</HeroTitleThird>
+              <HeroTitleThird>Share insights.</HeroTitleThird>
             </Hero>
           )}
         </Container>
@@ -48,11 +64,21 @@ const GlobalStyle = createGlobalStyle`
   }
 `;
 
-const Container = styled.div`
+const Container = styled.div<{ auth: boolean; }>`
   width: 100%;
   min-height: 100%;
   overflow: scroll;
-  background-image: linear-gradient(90deg, #C074B2, #8AB5E8);
+  background-image: ${props => props.auth ? 'linear-gradient(90deg, #C074B2, #8AB5E8)' : 'none'};
+
+  #myVideo {
+    position: fixed;
+    right: 0;
+    bottom: 0;
+    min-width: 100%;
+    min-height: 100%;
+    // filter: blur(2px);
+    object-fit: cover;
+  }
 `;
 
 const Hero = styled.div`
@@ -66,6 +92,7 @@ const HeroTitle = styled.span`
   font-size: 52px;
   color: #fff;
   font-weight: bold;
+  z-index: 2;
 
   @media (max-width: 500px) {
     font-size: 30px;
@@ -73,18 +100,18 @@ const HeroTitle = styled.span`
 `;
 
 const HeroTitleSecond = styled(HeroTitle)`
-  font-size: 36px;
+  font-size: 40px;
 
   @media (max-width: 500px) {
-    font-size: 22px;
+    font-size: 26px;
   }
 `;
 
 const HeroTitleThird = styled(HeroTitle)`
-  font-size: 28px;
+  font-size: 32px;
 
   @media (max-width: 500px) {
-    font-size: 18px;
+    font-size: 24px;
   }
 `;
 
