@@ -20,7 +20,8 @@ class Index extends React.Component<any, any> {
           <Header />
           {!authContext.isAuth && (
             <video autoPlay playsinline muted loop id="myVideo">
-              <source src={require("../img/video2.mp4")} type="video/mp4" />
+              {/* <source src={require("../img/video2.mp4")} type="video/mp4" /> */}
+              <source type="video/mp4" src="https://gcs-vimeo.akamaized.net/exp=1554910179~acl=%2A%2F987978732.mp4%2A~hmac=326b7f964b7b2d72e85cf5d90a2b2201845b3f144a1fe7c8f4d75c08edda02b2/vimeo-prod-skyfire-std-us/01/3362/10/266811431/987978732.mp4" />
             </video>
           )}
           {children}
