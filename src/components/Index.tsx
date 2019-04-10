@@ -19,7 +19,7 @@ class Index extends React.Component<any, any> {
         <Container auth={authContext.isAuth}>
           <Header />
           {!authContext.isAuth && (
-            <video autoPlay playsinline muted loop id="myVideo">
+            <video playsinline muted loop id="myVideo">
               <source src={require("../img/video2.mp4")} type="video/mp4" />
             </video>
           )}
