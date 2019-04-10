@@ -9,8 +9,8 @@
     }
   ],
   "routes": [
-    { "src": "^/static/(.*)", "dest": "/static/$1" },
-    { "src": "^/static/media/*.*.mp4", "status": 206, "dest": "/static/$1" },
+    { "src": "^/static/(.*)", "status": 206, "dest": "/static/$1" },
+    { "src": "^/static/*.*.mp4", "status": 206, "dest": "/static/$1" },
     { "src": "^/favicon.ico", "dest": "/favicon.ico" },
     { "src": "^/manifest.json", "dest": "/manifest.json" },
     { "src": "^/(.*)", "dest": "/index.html" }
