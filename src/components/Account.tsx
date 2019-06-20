@@ -70,12 +70,12 @@ class Account extends React.Component<any, State> {
           />
         </LeftSection>
         <RightSection>
-          {!links.length && (
+          {!links.length ? (
             <ZeroPlaylistsRated>
               You haven't shared any playlists yet.
             </ZeroPlaylistsRated>
-          )}
-          {links.length && (
+          ) : null}
+          {links.length ? (
             <LinkListContainer>
               <Table>
                 <TableRowHeader>
@@ -103,7 +103,7 @@ class Account extends React.Component<any, State> {
                 })}
               </Table>
             </LinkListContainer>
-          )}
+          ) : null}
         </RightSection>
       </Container>
     );
