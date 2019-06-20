@@ -6,9 +6,9 @@ const service = new Service(axios);
 service.register({
   // handle 401 errors
   onResponseError(error: string) {
-    console.log(`${error}`);
+    const errorCode = `${error}`.replace(/\D/g, "");
     // @ts-ignore
-    if (window.onResponseErrorLogout) {
+    if (window.onResponseErrorLogout && +errorCode !== 422) {
       // @ts-ignore
       window.onResponseErrorLogout();
     }
@@ -31,33 +31,95 @@ const getAccount = async (token: string) => {
 };
 
 const getPlaylists = async (limit: number, offset: number, token: string) => {
-  const playlistData = await axios.get(`${API_BASE_URL}/playlists?limit=${limit}&offset=${offset}`, {
-    headers: {
-      Authorization: `Bearer ${token}`
+  const playlistData = await axios.get(
+    `${API_BASE_URL}/playlists?limit=${limit}&offset=${offset}`,
+    {
+      headers: {
+        Authorization: `Bearer ${token}`
+      }
     }
-  });
+  );
 
   return playlistData.data;
 };
 
 const getPlaylist = async (id: string, token: string) => {
-  const singlePlaylistData = await axios.get(`${API_BASE_URL}/playlist?id=${id}`, {
-    headers: {
-      Authorization: `Bearer ${token}`
+  const singlePlaylistData = await axios.get(
+    `${API_BASE_URL}/playlist?id=${id}`,
+    {
+      headers: {
+        Authorization: `Bearer ${token}`
+      }
     }
-  });
+  );
 
   return singlePlaylistData.data;
-}
+};
 
 const analyzePlaylist = async (id: string, token: string) => {
-  const analyzedPlaylistData = await axios.get(`${API_BASE_URL}/analyze-playlist?id=${id}`, {
+  const analyzedPlaylistData = await axios.get(
+    `${API_BASE_URL}/analyze-playlist?id=${id}`,
+    {
+      headers: {
+        Authorization: `Bearer ${token}`
+      }
+    }
+  );
+
+  return analyzedPlaylistData.data;
+};
+
+const createLink = async (name: string, playlistId: string, token: string) => {
+  const link = await axios.post(
+    `${API_BASE_URL}/links`,
+    {
+      id: playlistId,
+      name
+    },
+    {
+      headers: {
+        Authorization: `Bearer ${token}`
+      },
+      validateStatus: function(status) {
+        return status < 500;
+      }
+    }
+  );
+
+  return link.data;
+};
+
+const getLinkList = async (token: string) => {
+  const linkList = await axios.get(`${API_BASE_URL}/links`, {
     headers: {
       Authorization: `Bearer ${token}`
     }
   });
 
-  return analyzedPlaylistData.data;
-}
+  return linkList.data;
+};
 
-export { getAccount, getPlaylists, getPlaylist, analyzePlaylist };
+const getPlaylistFromLink = async (linkId: string) => {
+  const urlBase =
+    process.env.NODE_ENV === "production"
+      ? "https://api.playlista.co"
+      : "http://localhost:5000";
+
+  const playlist = await axios.get(`${urlBase}/playlist/${linkId}`, {
+    validateStatus: function(status) {
+      return status < 500;
+    }
+  });
+
+  return playlist.data;
+};
+
+export {
+  getAccount,
+  getPlaylists,
+  getPlaylist,
+  analyzePlaylist,
+  createLink,
+  getLinkList,
+  getPlaylistFromLink
+};

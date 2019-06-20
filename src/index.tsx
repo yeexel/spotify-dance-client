@@ -5,14 +5,44 @@ import Account from "./components/Account";
 import Playlists from "./components/Playlists";
 import PlaylistView from "./components/PlaylistView";
 import * as serviceWorker from "./serviceWorker";
-import { BrowserRouter as Router } from "react-router-dom";
+import { toast } from "react-toastify";
+import { BrowserRouter as Router, Route } from "react-router-dom";
 import { AuthProvider } from "./infrastructure/AuthContext";
 import { ProtectedRoute } from "./infrastructure/ProtectedRoute";
+import PlaylistPublicView from "./components/PlaylistPublicView";
 
-import { library } from '@fortawesome/fontawesome-svg-core';
-import { faBars, faSignOutAlt, faHeadphones, faUser, faTimes, faAngleUp, faAngleDown, faShareSquare, faMusic } from '@fortawesome/free-solid-svg-icons';
+import "react-toastify/dist/ReactToastify.css";
 
-library.add(faBars, faSignOutAlt, faHeadphones, faUser, faTimes, faAngleUp, faAngleDown, faShareSquare, faMusic);
+import { library } from "@fortawesome/fontawesome-svg-core";
+import {
+  faBars,
+  faSignOutAlt,
+  faHeadphones,
+  faUser,
+  faTimes,
+  faAngleUp,
+  faAngleDown,
+  faShareSquare,
+  faMusic
+} from "@fortawesome/free-solid-svg-icons";
+
+library.add(
+  faBars,
+  faSignOutAlt,
+  faHeadphones,
+  faUser,
+  faTimes,
+  faAngleUp,
+  faAngleDown,
+  faShareSquare,
+  faMusic
+);
+
+toast.configure({
+  autoClose: 3000,
+  draggable: false,
+  position: "bottom-center"
+});
 
 const SpotifyDance = () => (
   <Router>
@@ -21,6 +51,7 @@ const SpotifyDance = () => (
         <ProtectedRoute exact path="/" component={Playlists} />
         <ProtectedRoute exact path="/playlist/:id" component={PlaylistView} />
         <ProtectedRoute exact path="/account" component={Account} />
+        <Route exact path="/s/:publicLinkId" component={PlaylistPublicView} />
       </Index>
     </AuthProvider>
   </Router>

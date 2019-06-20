@@ -1,16 +1,18 @@
 import * as React from "react";
 import styled from "styled-components";
-import { getAccount } from "../infrastructure/api";
+import { getAccount, getLinkList } from "../infrastructure/api";
 import { withAuthContext } from "../infrastructure/AuthContext";
-import posed from 'react-pose';
+import posed from "react-pose";
+import distanceInWordsToNow from "date-fns/distance_in_words_to_now";
 
 interface State {
   data: {
-    name: string,
-    email: string,
-    country: string,
-    avatar_url: string
-  },
+    name: string;
+    email: string;
+    country: string;
+    avatar_url: string;
+  };
+  links: Array<object>;
   isLoading: boolean;
 }
 
@@ -22,11 +24,13 @@ class Account extends React.Component<any, State> {
       country: "",
       avatar_url: ""
     },
+    links: [],
     isLoading: true
   };
 
   componentDidMount() {
     this._fetchAccountData();
+    this._fetchLinkList();
   }
 
   _fetchAccountData = async () => {
@@ -40,25 +44,66 @@ class Account extends React.Component<any, State> {
     });
   };
 
-  render() {
-    const {
-      isLoading,
-      data
-    } = this.state;
+  _fetchLinkList = async () => {
+    const { authContext } = this.props;
 
-    // if (isLoading) {
-    //   return null;
-    // }
+    const linkListData = await getLinkList(authContext.authToken);
+
+    // @ts-ignore
+    this.setState({ links: linkListData });
+  };
+
+  render() {
+    const { isLoading, data, links } = this.state;
+
+    if (isLoading || !links) {
+      return null;
+    }
 
     return (
-      <Container pose={isLoading ? 'closed' : 'open'}>
+      <Container pose={isLoading ? "closed" : "open"}>
         <LeftSection>
           <Avatar src={data.avatar_url} />
           <DisplayName>{data.name}</DisplayName>
-          <Country src={`https://www.countryflags.io/${data.country.toLowerCase()}/flat/32.png`} />
+          <Country
+            src={`https://www.countryflags.io/${data.country.toLowerCase()}/flat/32.png`}
+          />
         </LeftSection>
         <RightSection>
-          <ZeroPlaylistsRated>You haven't shared any playlists yet.</ZeroPlaylistsRated>
+          {!links.length && (
+            <ZeroPlaylistsRated>
+              You haven't shared any playlists yet.
+            </ZeroPlaylistsRated>
+          )}
+          {links.length && (
+            <LinkListContainer>
+              <Table>
+                <TableRowHeader>
+                  <TableHeader>Playlist link</TableHeader>
+                  <TableHeader>Clicks</TableHeader>
+                  <TableHeader>Created</TableHeader>
+                  <TableHeader>Status</TableHeader>
+                </TableRowHeader>
+                {links.map((link: any) => {
+                  return (
+                    <TableRow>
+                      <TableData>{link.name}</TableData>
+                      <TableData>{link.visit_count}</TableData>
+                      <TableData>{`${distanceInWordsToNow(
+                        link.created_at
+                      )} ago`}</TableData>
+                      <TableData>
+                        {link.is_active ? "Active" : "Disabled"}
+                      </TableData>
+                      <TableData>
+                        {/* {link.is_active ? "Active" : "Disabled"} */}
+                      </TableData>
+                    </TableRow>
+                  );
+                })}
+              </Table>
+            </LinkListContainer>
+          )}
         </RightSection>
       </Container>
     );
@@ -116,7 +161,7 @@ const Country = styled.img`
 `;
 
 const RightSection = styled.div`
-  width: 60%;
+  width: 100%;
   display: flex;
   // background-color: #e3e3e3;
   align-items: center;
@@ -132,4 +177,60 @@ const RightSection = styled.div`
 const ZeroPlaylistsRated = styled.span`
   align-self: center;
   color: #fff;
+`;
+
+const LinkListContainer = styled.div`
+  // align-self: center;
+  width: 100%;
+`;
+
+const Table = styled.table`
+  width: 100%;
+  color: #fff;
+  border-collapse: collapse;
+
+  @media (max-width: 500px) {
+    width: 350px;
+  }
+`;
+
+const TableRowHeader = styled.tr`
+  width: 100%;
+`;
+
+const TableRow = styled.tr`
+  width: 100%;
+
+  &:hover {
+    background-color: #c390ba;
+    cursor: pointer;
+  }
+`;
+
+const TableHeader = styled.th`
+  font-weight: bold;
+  font-size: 20px;
+  white-space: nowrap;
+  border-bottom: 1px solid lightgray;
+  padding-top: 1rem;
+  padding-bottom: 1rem;
+
+  @media (max-width: 500px) {
+    font-size: 15px;
+    padding-top: 0.3rem;
+    padding-bottom: 0.3rem;
+  }
+`;
+
+const TableData = styled.td`
+  text-align: center;
+  font-size: 18px;
+  padding-top: 1rem;
+  padding-bottom: 1rem;
+
+  @media (max-width: 500px) {
+    font-size: 13px;
+    padding-top: 0.3rem;
+    padding-bottom: 0.3rem;
+  }
 `;
