@@ -14,16 +14,11 @@
     }
   ],
   "routes": [
-    { "src": "^/static/js/(.*)", "dest": "/static/js/$1" },
-    { "src": "^/static/media/(.*)", "dest": "/static/media/$1" },
-    {
-      "src": "^/static/videos/(.*)",
-      "status": 206,
-      "dest": "/static/videos/$1"
-    },
+    { "src": "/s/(?<id>[^/]+)", "dest": "s.js" },
+    { "src": "^/static/js/(.*)", "dest": "/js/$1" },
+    { "src": "^/static/media/(.*)", "dest": "/media/$1" },
     { "src": "^/favicon.ico", "dest": "/favicon.ico" },
     { "src": "^/manifest.json", "dest": "/manifest.json" },
-    { "src": "/s/(?<id>[^/]+)", "dest": "s.js" },
     { "src": "^/(.*)", "dest": "/index.html" }
   ]
 }
