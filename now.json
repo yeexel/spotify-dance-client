@@ -19,7 +19,7 @@
     },
     { "src": "^/favicon.ico", "dest": "/favicon.ico" },
     { "src": "^/manifest.json", "dest": "/manifest.json" },
-    { "src": "/s/(?<id>[^/]*)", "dest": "/s.js" },
+    { "src": "/s/(?<id>[^/]+)", "dest": "s.js" },
     { "src": "^/(.*)", "dest": "/index.html" }
   ]
 }
