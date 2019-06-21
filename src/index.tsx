@@ -5,15 +5,10 @@ import Account from "./components/Account";
 import Playlists from "./components/Playlists";
 import PlaylistView from "./components/PlaylistView";
 import * as serviceWorker from "./serviceWorker";
-import { toast } from "react-toastify";
 import { BrowserRouter as Router, Route } from "react-router-dom";
 import { AuthProvider } from "./infrastructure/AuthContext";
 import { ProtectedRoute } from "./infrastructure/ProtectedRoute";
 import PlaylistPublicView from "./components/PlaylistPublicView";
-
-// import "react-toastify/dist/ReactToastify.css";
-
-require("../node_modules/react-toastify/dist/ReactToastify.css");
 
 import { library } from "@fortawesome/fontawesome-svg-core";
 import {
@@ -39,12 +34,6 @@ library.add(
   faShareSquare,
   faMusic
 );
-
-toast.configure({
-  autoClose: 3000,
-  draggable: false,
-  position: "bottom-center"
-});
 
 const SpotifyDance = () => (
   <Router>

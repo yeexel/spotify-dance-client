@@ -6,7 +6,6 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import posed from "react-pose";
 import { tween, spring } from "popmotion";
 import Chart from "react-apexcharts";
-import { toast } from "react-toastify";
 
 interface Props {
   isShareMode?: boolean;
@@ -99,7 +98,7 @@ class PlaylistView extends Component<Props, State> {
     );
 
     if (linkData.error) {
-      toast(linkData.msg);
+      // toast(linkData.msg);
     } else {
       alert(linkData.link);
     }
