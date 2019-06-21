@@ -13,19 +13,24 @@ class Index extends React.Component<any, any> {
   render() {
     const { children, authContext } = this.props;
 
+    const isPublicSharePage = window.location.pathname.indexOf("/s/") !== -1;
+
     return (
       <React.Fragment>
         <GlobalStyle />
-        <Container auth={authContext.isAuth}>
+        <Container auth={authContext.isAuth || isPublicSharePage}>
           <Header />
-          {!authContext.isAuth && (
+          {!authContext.isAuth && !isPublicSharePage && (
             <video autoPlay playsInline muted loop id="myVideo">
               {/* <source src={require("../img/video2.mp4")} type="video/mp4" /> */}
-              <source type="video/mp4" src="https://s3.eu-central-1.amazonaws.com/playlista/video2.mp4" />
+              <source
+                type="video/mp4"
+                src="https://s3.eu-central-1.amazonaws.com/playlista/video2.mp4"
+              />
             </video>
           )}
           {children}
-          {!authContext.isAuth && (
+          {!authContext.isAuth && !isPublicSharePage && (
             <Hero>
               <HeroTitle>Rediscover your playlist.</HeroTitle>
               <Separator />
@@ -54,11 +59,12 @@ const GlobalStyle = createGlobalStyle`
   }
 `;
 
-const Container = styled.div<{ auth: boolean; }>`
+const Container = styled.div<{ auth: boolean }>`
   width: 100%;
   min-height: 100%;
   overflow: scroll;
-  background-image: ${props => props.auth ? 'linear-gradient(90deg, #C074B2, #8AB5E8)' : 'none'};
+  background-image: ${props =>
+    props.auth ? "linear-gradient(90deg, #C074B2, #8AB5E8)" : "none"};
 
   #myVideo {
     position: fixed;
@@ -76,7 +82,7 @@ const Hero = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
-`
+`;
 
 const HeroTitle = styled.span`
   font-size: 52px;

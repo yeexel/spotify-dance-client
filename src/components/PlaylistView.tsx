@@ -8,6 +8,13 @@ import { tween, spring } from "popmotion";
 import Chart from "react-apexcharts";
 import { toast } from "react-toastify";
 
+interface Props {
+  isShareMode?: boolean;
+  authContext?: any;
+  match?: any;
+  playlist?: any;
+}
+
 interface State {
   playlist: object;
   isLoading: boolean;
@@ -41,7 +48,7 @@ function parseTime(millisec: number): object {
   };
 }
 
-class PlaylistView extends Component<any, State> {
+class PlaylistView extends Component<Props, State> {
   state = {
     playlist: {},
     isLoading: true,
@@ -59,14 +66,14 @@ class PlaylistView extends Component<any, State> {
   };
 
   _fetchPlaylist = async () => {
-    const {
-      authContext,
-      match: {
-        params: { id: playlistId }
-      }
-    } = this.props;
+    const { authContext, match, isShareMode, playlist } = this.props;
 
-    const playlistData = await getPlaylist(playlistId, authContext.authToken);
+    const playlistData = isShareMode
+      ? playlist
+      : await getPlaylist(
+          match ? match.params.id : null,
+          authContext ? authContext.authToken : null
+        );
 
     this.setState(
       {
@@ -221,6 +228,8 @@ class PlaylistView extends Component<any, State> {
   render() {
     const { playlist, isLoading, showDescription, valenceString } = this.state;
 
+    const { isShareMode } = this.props;
+
     // if (isLoading) {
     //   return null;
     // }
@@ -279,9 +288,14 @@ class PlaylistView extends Component<any, State> {
             <ListenOnSpotifyBtn href={currentPlaylist.uri}>
               <FontAwesomeIcon icon="music" /> Play on Spotify
             </ListenOnSpotifyBtn>
-            <AnalyzeBtn onClick={this._createLink} show={!hasMoreThan100Tracks}>
-              <FontAwesomeIcon icon="share-square" /> Share playlist
-            </AnalyzeBtn>
+            {!isShareMode ? (
+              <AnalyzeBtn
+                onClick={this._createLink}
+                show={!hasMoreThan100Tracks}
+              >
+                <FontAwesomeIcon icon="share-square" /> Share playlist
+              </AnalyzeBtn>
+            ) : null}
           </BtnWrapper>
         </LeftSection>
         {!hasMoreThan100Tracks ? (
@@ -670,7 +684,7 @@ const BtnWrapper = styled.div`
   width: 200px;
 
   @media (max-width: 500px) {
-    width: 275px;
+    width: 290px;
     flex-direction: row;
   }
 `;

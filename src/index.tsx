@@ -11,7 +11,9 @@ import { AuthProvider } from "./infrastructure/AuthContext";
 import { ProtectedRoute } from "./infrastructure/ProtectedRoute";
 import PlaylistPublicView from "./components/PlaylistPublicView";
 
-import "react-toastify/dist/ReactToastify.css";
+// import "react-toastify/dist/ReactToastify.css";
+
+require("../node_modules/react-toastify/dist/ReactToastify.css");
 
 import { library } from "@fortawesome/fontawesome-svg-core";
 import {
