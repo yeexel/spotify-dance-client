@@ -12,7 +12,6 @@ import PlaylistPublicView from "./components/PlaylistPublicView";
 import Landing from "./components/Landing";
 
 import { toast } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
 
 toast.configure();
 
