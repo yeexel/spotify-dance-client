@@ -13,7 +13,11 @@ import Landing from "./components/Landing";
 
 import { toast } from "react-toastify";
 
-toast.configure();
+toast.configure({
+  autoClose: 3000,
+  draggable: false,
+  position: "bottom-center"
+});
 
 import { library } from "@fortawesome/fontawesome-svg-core";
 import {

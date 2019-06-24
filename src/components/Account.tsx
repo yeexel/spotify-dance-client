@@ -34,8 +34,6 @@ class Account extends React.Component<any, State> {
   componentDidMount() {
     this._fetchAccountData();
     this._fetchLinkList();
-
-    setTimeout(() => toast("helloo"), 3000);
   }
 
   _fetchAccountData = async () => {
@@ -92,9 +90,26 @@ class Account extends React.Component<any, State> {
                 {links.map((link: any) => {
                   return (
                     <TableRow
-                      onClick={() =>
-                        this.props.history.push(`/playlist/${data.spotify_id}`)
-                      }
+                      onClick={() => {
+                        const linkUrl =
+                          process.env.NODE_ENV === "production"
+                            ? `https://playlista.co/s/${link.public_id}`
+                            : `http://localhost:3000/s/${link.public_id}`;
+
+                        const hiddenInput = document.createElement("input");
+                        hiddenInput.id = "1312";
+                        hiddenInput.type = "text";
+                        hiddenInput.value = linkUrl;
+
+                        document.body.appendChild(hiddenInput);
+
+                        hiddenInput.select();
+                        document.execCommand("copy");
+
+                        document.body.removeChild(hiddenInput);
+
+                        toast(`Link ${linkUrl} was copied to clipboard.`);
+                      }}
                     >
                       <TableDataLinkName>{link.name}</TableDataLinkName>
                       <TableData>{link.visit_count}</TableData>
@@ -176,6 +191,7 @@ const RightSection = styled.div`
   align-items: center;
   flex-direction: column;
   justify-content: center;
+  margin-bottom: 30px;
 
   @media (max-width: 500px) {
     width: auto;

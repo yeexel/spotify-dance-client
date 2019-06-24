@@ -6,6 +6,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import posed from "react-pose";
 import { tween } from "popmotion";
 import Chart from "react-apexcharts";
+import { toast } from "react-toastify";
 
 interface Props {
   isShareMode?: boolean;
@@ -100,7 +101,21 @@ class PlaylistView extends Component<Props, State> {
     if (linkData.error) {
       // toast(linkData.msg);
     } else {
-      alert(linkData.link);
+      const linkUrl = linkData.link;
+
+      const hiddenInput = document.createElement("input");
+      hiddenInput.id = "1312";
+      hiddenInput.type = "text";
+      hiddenInput.value = linkUrl;
+
+      document.body.appendChild(hiddenInput);
+
+      hiddenInput.select();
+      document.execCommand("copy");
+
+      document.body.removeChild(hiddenInput);
+
+      toast(`Link ${linkUrl} was copied to clipboard.`);
     }
   };
 
