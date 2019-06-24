@@ -103,19 +103,24 @@ class PlaylistView extends Component<Props, State> {
     } else {
       const linkUrl = linkData.link;
 
-      const hiddenInput = document.createElement("input");
-      hiddenInput.id = "1312";
-      hiddenInput.type = "text";
-      hiddenInput.value = linkUrl;
+      const isMobile =
+        "ontouchstart" in document.documentElement &&
+        navigator.userAgent.match(/Mobi/);
 
-      document.body.appendChild(hiddenInput);
+      // @ts-ignore
+      if (isMobile && window.navigator.share) {
+        // @ts-ignore
+        window.navigator.share({
+          title: "Playlist link",
+          // @ts-ignore
+          text: `Check out my playlist ${playlist.name}`,
+          url: linkUrl
+        });
+      } else {
+        console.log("Desktop...");
+      }
 
-      hiddenInput.select();
-      document.execCommand("copy");
-
-      document.body.removeChild(hiddenInput);
-
-      toast(`Link ${linkUrl} was copied to clipboard.`);
+      toast(`Playlist Link was copied to clipboard.`);
     }
   };
 
