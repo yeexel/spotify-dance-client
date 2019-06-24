@@ -9,6 +9,7 @@ import { BrowserRouter as Router, Route } from "react-router-dom";
 import { AuthProvider } from "./infrastructure/AuthContext";
 import { ProtectedRoute } from "./infrastructure/ProtectedRoute";
 import PlaylistPublicView from "./components/PlaylistPublicView";
+import { ToastContainer } from "react-toastify";
 
 import { library } from "@fortawesome/fontawesome-svg-core";
 import {
@@ -35,6 +36,8 @@ library.add(
   faMusic
 );
 
+import "react-toastify/dist/ReactToastify.min.css";
+
 const SpotifyDance = () => (
   <Router>
     <AuthProvider>
@@ -44,6 +47,7 @@ const SpotifyDance = () => (
         <ProtectedRoute exact path="/account" component={Account} />
         <Route exact path="/s/:publicLinkId" component={PlaylistPublicView} />
       </Index>
+      <ToastContainer />
     </AuthProvider>
   </Router>
 );

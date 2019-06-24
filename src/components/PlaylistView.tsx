@@ -4,8 +4,9 @@ import { getPlaylist, createLink } from "../infrastructure/api";
 import { withAuthContext } from "../infrastructure/AuthContext";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import posed from "react-pose";
-import { tween, spring } from "popmotion";
+import { tween } from "popmotion";
 import Chart from "react-apexcharts";
+import { toast } from "react-toastify";
 
 interface Props {
   isShareMode?: boolean;
@@ -101,6 +102,7 @@ class PlaylistView extends Component<Props, State> {
       // toast(linkData.msg);
     } else {
       alert(linkData.link);
+      toast("helo");
     }
   };
 
@@ -629,7 +631,7 @@ const RightMostSection = styled(RightMostSectionAnimated)`
   flex-direction: column;
   // height: 350px;
   z-index: 1;
-  margin-top: -30px;
+  margin-top: -10px;
 
   @media (max-width: 500px) {
     width: auto;

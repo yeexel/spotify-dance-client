@@ -131,7 +131,7 @@ const Container = styled(AnimatedContainer)`
 `;
 
 const LeftSection = styled.div`
-  width: 40%;
+  width: 20%;
   // background-color: #fff;
   display: flex;
   flex-direction: column;
@@ -161,7 +161,7 @@ const Country = styled.img`
 `;
 
 const RightSection = styled.div`
-  width: 100%;
+  width: 80%;
   display: flex;
   // background-color: #e3e3e3;
   align-items: center;
