@@ -3,12 +3,12 @@ import styled from "styled-components";
 import { Link } from "react-router-dom";
 import { withAuthContext } from "../infrastructure/AuthContext";
 import PlaylistaLogo from "../img/playlista.png";
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 class Header extends React.Component<any, any> {
   state = {
     sideNav: false
-  }
+  };
 
   componentDidMount() {
     window.addEventListener("scroll", this.scrollEventListener);
@@ -19,8 +19,8 @@ class Header extends React.Component<any, any> {
   }
 
   toggleSideNav = () => {
-    this.setState({ sideNav: !this.state.sideNav })
-  }
+    this.setState({ sideNav: !this.state.sideNav });
+  };
 
   scrollEventListener = () => {
     const headerEl = document.getElementsByTagName("header")[0];
@@ -31,7 +31,7 @@ class Header extends React.Component<any, any> {
     } else {
       headerEl.style.background = "transparent";
     }
-  }
+  };
 
   render() {
     const { authContext } = this.props;
@@ -39,7 +39,7 @@ class Header extends React.Component<any, any> {
     return (
       <HeaderContainer>
         <Container>
-          <Link to="/">
+          <Link to="/playlists">
             <Logo>
               <img src={PlaylistaLogo} />
             </Logo>
@@ -48,7 +48,7 @@ class Header extends React.Component<any, any> {
             <Nav>
               <DesktopNav>
                 <NavItem>
-                  <Link to="/">
+                  <Link to="/playlists">
                     {/*<FontAwesomeIcon icon="headphones" /> */}Playlists
                   </Link>
                 </NavItem>
@@ -61,11 +61,11 @@ class Header extends React.Component<any, any> {
                 <NavItemSeparator />
                 <NavItem>|</NavItem>
                 <NavItemSeparator />
-                  <NavItem onClick={authContext.logout}>
-                    <Link to="">
-                      {/*<FontAwesomeIcon icon="sign-out-alt" /> */}Log out
-                    </Link>
-                  </NavItem>
+                <NavItem onClick={authContext.logout}>
+                  <Link to="">
+                    {/*<FontAwesomeIcon icon="sign-out-alt" /> */}Log out
+                  </Link>
+                </NavItem>
               </DesktopNav>
               <MobileNav onClick={this.toggleSideNav}>
                 <FontAwesomeIcon icon="bars" />
@@ -74,9 +74,15 @@ class Header extends React.Component<any, any> {
                 <CloseBtnContainer onClick={this.toggleSideNav}>
                   <FontAwesomeIcon icon="times" />
                 </CloseBtnContainer>
-                <MobileSideNavLink to="/" onClick={this.toggleSideNav}>Playlists</MobileSideNavLink>
-                <MobileSideNavLink to="/account" onClick={this.toggleSideNav}>Profile</MobileSideNavLink>
-                <LogoutSideNavLink to="" onClick={authContext.logout}>Log out</LogoutSideNavLink>
+                <MobileSideNavLink to="/" onClick={this.toggleSideNav}>
+                  Playlists
+                </MobileSideNavLink>
+                <MobileSideNavLink to="/account" onClick={this.toggleSideNav}>
+                  Profile
+                </MobileSideNavLink>
+                <LogoutSideNavLink to="" onClick={authContext.logout}>
+                  Log out
+                </LogoutSideNavLink>
               </MobileSideNav>
             </Nav>
           )}
@@ -171,7 +177,7 @@ const NavItem = styled.span`
   > a:hover {
     border-color: #fff;
   }
-`
+`;
 
 const NavItemSeparator = styled.div`
   width: 30px;
@@ -190,13 +196,14 @@ const MobileNav = styled.div`
   }
 `;
 
-const MobileSideNav = styled.div<{ show: boolean; }>`
+const MobileSideNav = styled.div<{ show: boolean }>`
   display: none;
 
   @media (max-width: 500px) {
     display: block;
     height: 100%; /* 100% Full-height */
-    width: ${props => props.show ? 250 : 0}px; /* 0 width - change this with JavaScript */
+    width: ${props =>
+      props.show ? 250 : 0}px; /* 0 width - change this with JavaScript */
     position: fixed; /* Stay in place */
     z-index: 99999; /* Stay on top */
     top: 0; /* Stay at the top */
@@ -233,7 +240,7 @@ const LogoutSideNavLink = styled(MobileSideNavLink)`
 const LoginButtonContainer = styled.div`
   margin-top: -7px;
   margin-right: 15px;
-`
+`;
 
 const LoginButton = styled.button`
   background-color: transparent;
