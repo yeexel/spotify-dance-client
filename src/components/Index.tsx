@@ -2,6 +2,7 @@ import Header from "./Header";
 import * as React from "react";
 import styled, { createGlobalStyle } from "styled-components";
 import { withAuthContext } from "../infrastructure/AuthContext";
+import myVideo from "../img/video2.mp4";
 
 class Index extends React.Component<any, any> {
   componentDidMount() {
@@ -15,6 +16,8 @@ class Index extends React.Component<any, any> {
 
     const isPublicSharePage = window.location.pathname.indexOf("/s/") !== -1;
 
+    console.log(!authContext.isAuth && !isPublicSharePage);
+
     return (
       <React.Fragment>
         <GlobalStyle />
@@ -22,11 +25,7 @@ class Index extends React.Component<any, any> {
           <Header />
           {!authContext.isAuth && !isPublicSharePage && (
             <video autoPlay playsInline muted loop id="myVideo">
-              {/* <source src={require("../img/video2.mp4")} type="video/mp4" /> */}
-              <source
-                type="video/mp4"
-                src="https://s3.eu-central-1.amazonaws.com/playlista/video2.mp4"
-              />
+              <source src={myVideo} type="video/mp4" />
             </video>
           )}
           {children}
@@ -48,8 +47,8 @@ class Index extends React.Component<any, any> {
 export default withAuthContext(Index);
 
 const GlobalStyle = createGlobalStyle`
-  html,
-  body,
+  // html,
+  // body,
   #root {
     padding: 0;
     margin: 0;
