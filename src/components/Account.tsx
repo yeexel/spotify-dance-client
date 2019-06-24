@@ -4,6 +4,7 @@ import { getAccount, getLinkList } from "../infrastructure/api";
 import { withAuthContext } from "../infrastructure/AuthContext";
 import posed from "react-pose";
 import distanceInWordsToNow from "date-fns/distance_in_words_to_now";
+import { toast } from "react-toastify";
 
 interface State {
   data: {
@@ -11,6 +12,7 @@ interface State {
     email: string;
     country: string;
     avatar_url: string;
+    spotify_id: string;
   };
   links: Array<object>;
   isLoading: boolean;
@@ -22,7 +24,8 @@ class Account extends React.Component<any, State> {
       name: "",
       email: "",
       country: "",
-      avatar_url: ""
+      avatar_url: "",
+      spotify_id: ""
     },
     links: [],
     isLoading: true
@@ -31,6 +34,8 @@ class Account extends React.Component<any, State> {
   componentDidMount() {
     this._fetchAccountData();
     this._fetchLinkList();
+
+    setTimeout(() => toast("helloo"), 3000);
   }
 
   _fetchAccountData = async () => {
@@ -86,8 +91,12 @@ class Account extends React.Component<any, State> {
                 </TableRowHeader>
                 {links.map((link: any) => {
                   return (
-                    <TableRow>
-                      <TableData>{link.name}</TableData>
+                    <TableRow
+                      onClick={() =>
+                        this.props.history.push(`/playlist/${data.spotify_id}`)
+                      }
+                    >
+                      <TableDataLinkName>{link.name}</TableDataLinkName>
                       <TableData>{link.visit_count}</TableData>
                       <TableData>{`${distanceInWordsToNow(
                         link.created_at
@@ -232,5 +241,11 @@ const TableData = styled.td`
     font-size: 13px;
     padding-top: 0.3rem;
     padding-bottom: 0.3rem;
+  }
+`;
+
+const TableDataLinkName = styled(TableData)`
+  @media (max-width: 500px) {
+    text-align: left;
   }
 `;

@@ -11,6 +11,11 @@ import { ProtectedRoute } from "./infrastructure/ProtectedRoute";
 import PlaylistPublicView from "./components/PlaylistPublicView";
 import Landing from "./components/Landing";
 
+import { toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+
+toast.configure();
+
 import { library } from "@fortawesome/fontawesome-svg-core";
 import {
   faBars,
