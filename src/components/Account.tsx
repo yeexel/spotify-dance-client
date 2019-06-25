@@ -82,10 +82,13 @@ class Account extends React.Component<any, State> {
             <LinkListContainer>
               <Table>
                 <TableRowHeader>
-                  <TableHeader>Playlist link</TableHeader>
+                  <TableDataLinkNameHeader>
+                    Playlist link
+                  </TableDataLinkNameHeader>
                   <TableHeader>Clicks</TableHeader>
-                  <TableHeader>Created</TableHeader>
-                  <TableHeader>Status</TableHeader>
+                  <TableDataLinkCreatedHeader>
+                    Created
+                  </TableDataLinkCreatedHeader>
                 </TableRowHeader>
                 {links.map((link: any) => {
                   return (
@@ -108,20 +111,21 @@ class Account extends React.Component<any, State> {
 
                         document.body.removeChild(hiddenInput);
 
-                        toast(`Link ${linkUrl} was copied to clipboard.`);
+                        const toastText =
+                          "ontouchstart" in document.documentElement
+                            ? `Public link to playlist is ${linkUrl}`
+                            : `Link ${linkUrl} was copied to clipboard`;
+
+                        toast(toastText, {
+                          autoClose: 5000
+                        });
                       }}
                     >
                       <TableDataLinkName>{link.name}</TableDataLinkName>
                       <TableData>{link.visit_count}</TableData>
-                      <TableData>{`${distanceInWordsToNow(
+                      <TableDataCreated>{`${distanceInWordsToNow(
                         link.created_at
-                      )} ago`}</TableData>
-                      <TableData>
-                        {link.is_active ? "Active" : "Disabled"}
-                      </TableData>
-                      <TableData>
-                        {/* {link.is_active ? "Active" : "Disabled"} */}
-                      </TableData>
+                      )} ago`}</TableDataCreated>
                     </TableRow>
                   );
                 })}
@@ -263,5 +267,23 @@ const TableData = styled.td`
 const TableDataLinkName = styled(TableData)`
   @media (max-width: 500px) {
     text-align: left;
+  }
+`;
+
+const TableDataLinkNameHeader = styled(TableHeader)`
+  @media (max-width: 500px) {
+    text-align: left;
+  }
+`;
+
+const TableDataCreated = styled(TableData)`
+  @media (max-width: 500px) {
+    text-align: right;
+  }
+`;
+
+const TableDataLinkCreatedHeader = styled(TableHeader)`
+  @media (max-width: 500px) {
+    text-align: right;
   }
 `;

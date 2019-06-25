@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import styled from "styled-components";
+import styled, { css } from "styled-components";
 import { getPlaylist, createLink } from "../infrastructure/api";
 import { withAuthContext } from "../infrastructure/AuthContext";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -99,28 +99,13 @@ class PlaylistView extends Component<Props, State> {
     );
 
     if (linkData.error) {
-      // toast(linkData.msg);
+      // toast("Playlist link already exists.", {
+      //   type: "info"
+      // });
     } else {
-      const linkUrl = linkData.link;
-
-      const isMobile =
-        "ontouchstart" in document.documentElement &&
-        navigator.userAgent.match(/Mobi/);
-
-      // @ts-ignore
-      if (isMobile && window.navigator.share) {
-        // @ts-ignore
-        window.navigator.share({
-          title: "Playlist link",
-          // @ts-ignore
-          text: `Check out my playlist ${playlist.name}`,
-          url: linkUrl
-        });
-      } else {
-        console.log("Desktop...");
-      }
-
-      toast(`Playlist Link was copied to clipboard.`);
+      toast(`Public link to playlist is ${linkData.link}`, {
+        autoClose: 5000
+      });
     }
   };
 

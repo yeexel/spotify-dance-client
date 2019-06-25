@@ -1,7 +1,8 @@
 import * as React from "react";
 import styled from "styled-components";
+import { withRouter } from "react-router-dom";
 
-class Landing extends React.Component {
+class Landing extends React.Component<any, any> {
   render() {
     return (
       <React.Fragment>
@@ -17,13 +18,17 @@ class Landing extends React.Component {
           <HeroTitleSecond>Analyze music taste.</HeroTitleSecond>
           <Separator />
           <HeroTitleThird>Share insights.</HeroTitleThird>
+          <Separator />
+          <HeroTitleFourth onClick={() => this.props.history.push("/about")}>
+            What is Playlista?
+          </HeroTitleFourth>
         </Hero>
       </React.Fragment>
     );
   }
 }
 
-export default Landing;
+export default withRouter(Landing);
 
 const VideoWrapper = styled.video`
   position: fixed;
@@ -70,4 +75,14 @@ const HeroTitleThird = styled(HeroTitle)`
 
 const Separator = styled.div`
   height: 4vmin;
+`;
+
+const HeroTitleFourth = styled(HeroTitle)`
+  font-size: 18px;
+  cursor: pointer;
+  text-decoration: underline;
+
+  @media (max-width: 500px) {
+    font-size: 14px;
+  }
 `;

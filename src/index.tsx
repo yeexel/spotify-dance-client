@@ -9,6 +9,7 @@ import { BrowserRouter as Router, Route } from "react-router-dom";
 import { AuthProvider } from "./infrastructure/AuthContext";
 import { ProtectedRoute } from "./infrastructure/ProtectedRoute";
 import PlaylistPublicView from "./components/PlaylistPublicView";
+import About from "./components/About";
 import Landing from "./components/Landing";
 
 import { toast } from "react-toastify";
@@ -53,6 +54,7 @@ const SpotifyDance = () => (
         <ProtectedRoute exact path="/playlist/:id" component={PlaylistView} />
         <ProtectedRoute exact path="/account" component={Account} />
         <Route exact path="/s/:publicLinkId" component={PlaylistPublicView} />
+        <Route exact path="/about" component={About} />
       </Index>
     </AuthProvider>
   </Router>

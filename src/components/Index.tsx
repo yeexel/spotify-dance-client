@@ -23,11 +23,14 @@ class Index extends React.Component<any, any> {
     const { children, authContext } = this.props;
 
     const isPublicSharePage = window.location.pathname.indexOf("/s/") !== -1;
+    const isAboutPage = window.location.pathname.indexOf("/about") !== -1;
 
     return (
       <React.Fragment>
         <GlobalStyle />
-        <Container auth={authContext.isAuth || isPublicSharePage}>
+        <Container
+          auth={authContext.isAuth || isPublicSharePage || isAboutPage}
+        >
           <Header />
           {children}
         </Container>
