@@ -103,6 +103,17 @@ class PlaylistView extends Component<Props, State> {
       //   type: "info"
       // });
     } else {
+      const hiddenInput = document.createElement("input");
+      hiddenInput.type = "text";
+      hiddenInput.value = linkData.lin;
+
+      document.body.appendChild(hiddenInput);
+
+      hiddenInput.select();
+      document.execCommand("copy");
+
+      document.body.removeChild(hiddenInput);
+
       toast(`Public link to playlist is ${linkData.link}`, {
         autoClose: 5000
       });
