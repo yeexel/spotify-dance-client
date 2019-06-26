@@ -308,7 +308,7 @@ class PlaylistView extends Component<Props, State> {
                 onClick={this._createLink}
                 show={!hasMoreThan100Tracks}
               >
-                <FontAwesomeIcon icon="share-square" /> Share playlist
+                <FontAwesomeIcon icon="share-square" /> Share metrics
               </AnalyzeBtn>
             ) : null}
           </BtnWrapper>
