@@ -105,7 +105,7 @@ class PlaylistView extends Component<Props, State> {
     } else {
       const hiddenInput = document.createElement("input");
       hiddenInput.type = "text";
-      hiddenInput.value = linkData.lin;
+      hiddenInput.value = linkData.link;
 
       document.body.appendChild(hiddenInput);
 
