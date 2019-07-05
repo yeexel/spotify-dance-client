@@ -93,10 +93,56 @@ const getLinkList = async (token: string) => {
   const linkList = await axios.get(`${API_BASE_URL}/links`, {
     headers: {
       Authorization: `Bearer ${token}`
+    },
+    validateStatus: function(status) {
+      return status < 500;
     }
   });
 
   return linkList.data;
+};
+
+const toggleAddToDiscover = async (playlistId: string, token: string) => {
+  const playlist = await axios.put(
+    `${API_BASE_URL}/playlists/${playlistId}`,
+    {},
+    {
+      headers: {
+        Authorization: `Bearer ${token}`
+      }
+    }
+  );
+
+  return playlist.data;
+};
+
+const createPlaylist = async (trackIds: Array<string>, token: string) => {
+  const playlist = await axios.post(
+    `${API_BASE_URL}/playlists`,
+    {
+      trackIds
+    },
+    {
+      headers: {
+        Authorization: `Bearer ${token}`
+      }
+    }
+  );
+
+  return playlist.data;
+};
+
+const getRecommendations = async (token: string) => {
+  const recommendations = await axios.get(`${API_BASE_URL}/discover`, {
+    headers: {
+      Authorization: `Bearer ${token}`
+    },
+    validateStatus: function(status) {
+      return status !== 401;
+    }
+  });
+
+  return recommendations.data;
 };
 
 const getPlaylistFromLink = async (linkId: string) => {
@@ -121,5 +167,8 @@ export {
   analyzePlaylist,
   createLink,
   getLinkList,
-  getPlaylistFromLink
+  getRecommendations,
+  toggleAddToDiscover,
+  getPlaylistFromLink,
+  createPlaylist
 };

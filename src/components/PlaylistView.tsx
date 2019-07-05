@@ -1,12 +1,17 @@
 import React, { Component } from "react";
 import styled, { css } from "styled-components";
-import { getPlaylist, createLink } from "../infrastructure/api";
+import {
+  getPlaylist,
+  createLink,
+  toggleAddToDiscover
+} from "../infrastructure/api";
 import { withAuthContext } from "../infrastructure/AuthContext";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import posed from "react-pose";
 import { tween } from "popmotion";
 import Chart from "react-apexcharts";
 import { toast } from "react-toastify";
+import Switch from "react-switch";
 
 interface Props {
   isShareMode?: boolean;
@@ -54,7 +59,8 @@ class PlaylistView extends Component<Props, State> {
     isLoading: true,
     showDescription: false,
     gradient: undefined,
-    valenceString: ""
+    valenceString: "",
+    addToDiscover: false
   };
 
   componentDidMount() {
@@ -63,6 +69,15 @@ class PlaylistView extends Component<Props, State> {
 
   toggleDescription = () => {
     this.setState({ showDescription: !this.state.showDescription });
+  };
+
+  toggleAddToDiscoverButton = () => {
+    const { authContext, match } = this.props;
+
+    toggleAddToDiscover(match.params.id, authContext.authToken);
+
+    // @ts-ignore
+    this.setState({ addToDiscover: !this.state.addToDiscover });
   };
 
   _fetchPlaylist = async () => {
@@ -79,7 +94,9 @@ class PlaylistView extends Component<Props, State> {
       {
         playlist: playlistData,
         isLoading: false,
-        valenceString: getValenceString(playlistData.valence)
+        valenceString: getValenceString(playlistData.valence),
+        // @ts-ignore
+        addToDiscover: playlistData.discover_include
       },
       this._analyzeImageData
     );
@@ -241,7 +258,13 @@ class PlaylistView extends Component<Props, State> {
   };
 
   render() {
-    const { playlist, isLoading, showDescription, valenceString } = this.state;
+    const {
+      playlist,
+      isLoading,
+      showDescription,
+      valenceString,
+      addToDiscover
+    } = this.state;
 
     const { isShareMode } = this.props;
 
@@ -312,6 +335,18 @@ class PlaylistView extends Component<Props, State> {
               </AnalyzeBtn>
             ) : null}
           </BtnWrapper>
+          {!hasMoreThan100Tracks ? (
+            <AddToDiscover>
+              <label>
+                <AddToDiscoverSpan>Mark as favorite</AddToDiscoverSpan>
+                <Switch
+                  height={25}
+                  onChange={this.toggleAddToDiscoverButton}
+                  checked={addToDiscover}
+                />
+              </label>
+            </AddToDiscover>
+          ) : null}
         </LeftSection>
         {!hasMoreThan100Tracks ? (
           <RightMostSection pose={isLoading ? "closed" : "open"}>
@@ -446,8 +481,7 @@ class PlaylistView extends Component<Props, State> {
           {!hasMoreThan100Tracks && <TitleSectionSeparator />}
           {hasMoreThan100Tracks && (
             <HasMoreTracks>
-              Insights are not available for playlists with more than 100
-              tracks.
+              Metrics are not available for playlists with more than 100 tracks.
             </HasMoreTracks>
           )}
           <PlaylistInfoLine show={true}>
@@ -546,6 +580,22 @@ const CoverImageContainer = styled.div`
   height: 250px;
   display: flex;
   flex-direction: column;
+`;
+
+const AddToDiscover = styled.div`
+  text-align: center;
+  margin-top: 15px;
+
+  @media (max-width: 500px) {
+    margin-top: 30px;
+  }
+`;
+
+const AddToDiscoverSpan = styled.span`
+  vertical-align: super;
+  margin-right: 10px;
+  color: #fff;
+  font-size: 16px;
 `;
 
 const CoverImage = styled.img`

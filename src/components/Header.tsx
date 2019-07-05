@@ -54,6 +54,12 @@ class Header extends React.Component<any, any> {
                 </NavItem>
                 <NavItemSeparator />
                 <NavItem>
+                  <Link to="/discover">
+                    {/*<FontAwesomeIcon icon="user" /> */}Discover
+                  </Link>
+                </NavItem>
+                <NavItemSeparator />
+                <NavItem>
                   <Link to="/account">
                     {/*<FontAwesomeIcon icon="user" /> */}Profile
                   </Link>
@@ -76,6 +82,9 @@ class Header extends React.Component<any, any> {
                 </CloseBtnContainer>
                 <MobileSideNavLink to="/" onClick={this.toggleSideNav}>
                   Playlists
+                </MobileSideNavLink>
+                <MobileSideNavLink to="/discover" onClick={this.toggleSideNav}>
+                  Discover
                 </MobileSideNavLink>
                 <MobileSideNavLink to="/account" onClick={this.toggleSideNav}>
                   Profile

@@ -1,6 +1,6 @@
 {
   "name": "spotify-dance-client",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "private": true,
   "dependencies": {
     "@babel/core": "7.1.6",
@@ -59,6 +59,7 @@
     "react-helmet": "^5.2.1",
     "react-pose": "^4.0.8",
     "react-router-dom": "^4.3.1",
+    "react-switch": "^5.0.0",
     "react-toastify": "^5.3.1",
     "resolve": "1.8.1",
     "sass-loader": "7.1.0",

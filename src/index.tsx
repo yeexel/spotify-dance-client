@@ -11,6 +11,7 @@ import { ProtectedRoute } from "./infrastructure/ProtectedRoute";
 import PlaylistPublicView from "./components/PlaylistPublicView";
 import About from "./components/About";
 import Landing from "./components/Landing";
+import Discover from "./components/Discover";
 
 import { toast } from "react-toastify";
 
@@ -53,6 +54,7 @@ const SpotifyDance = () => (
         <ProtectedRoute exact path="/playlists" component={Playlists} />
         <ProtectedRoute exact path="/playlist/:id" component={PlaylistView} />
         <ProtectedRoute exact path="/account" component={Account} />
+        <ProtectedRoute exact path="/discover" component={Discover} />
         <Route exact path="/s/:publicLinkId" component={PlaylistPublicView} />
         <Route exact path="/about" component={About} />
       </Index>
