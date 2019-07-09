@@ -132,7 +132,7 @@ class Discover extends React.Component<any, State> {
         </LeftSection>
         {!data.error ? (
           <RightSection>
-            <Header>Today' tracks</Header>
+            <Header>Today's tracks</Header>
             {data && data.recommendations ? (
               <TrackWrapper>
                 {data.recommendations.map((recommendation: any) => {
