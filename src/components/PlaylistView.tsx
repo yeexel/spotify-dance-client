@@ -335,7 +335,7 @@ class PlaylistView extends Component<Props, State> {
               </AnalyzeBtn>
             ) : null}
           </BtnWrapper>
-          {!hasMoreThan100Tracks ? (
+          {!isShareMode || !hasMoreThan100Tracks ? (
             <AddToDiscover>
               <label>
                 <AddToDiscoverSpan>Mark as favorite</AddToDiscoverSpan>
@@ -348,7 +348,7 @@ class PlaylistView extends Component<Props, State> {
             </AddToDiscover>
           ) : null}
         </LeftSection>
-        {!isShareMode && !hasMoreThan100Tracks ? (
+        {!hasMoreThan100Tracks ? (
           <RightMostSection pose={isLoading ? "closed" : "open"}>
             <Chart
               series={[
