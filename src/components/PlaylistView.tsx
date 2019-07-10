@@ -348,7 +348,7 @@ class PlaylistView extends Component<Props, State> {
             </AddToDiscover>
           ) : null}
         </LeftSection>
-        {!hasMoreThan100Tracks ? (
+        {!isShareMode && !hasMoreThan100Tracks ? (
           <RightMostSection pose={isLoading ? "closed" : "open"}>
             <Chart
               series={[
