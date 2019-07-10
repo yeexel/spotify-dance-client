@@ -335,17 +335,19 @@ class PlaylistView extends Component<Props, State> {
               </AnalyzeBtn>
             ) : null}
           </BtnWrapper>
-          {!isShareMode || !hasMoreThan100Tracks ? (
-            <AddToDiscover>
-              <label>
-                <AddToDiscoverSpan>Mark as favorite</AddToDiscoverSpan>
-                <Switch
-                  height={25}
-                  onChange={this.toggleAddToDiscoverButton}
-                  checked={addToDiscover}
-                />
-              </label>
-            </AddToDiscover>
+          {!isShareMode ? (
+            !hasMoreThan100Tracks ? (
+              <AddToDiscover>
+                <label>
+                  <AddToDiscoverSpan>Mark as favorite</AddToDiscoverSpan>
+                  <Switch
+                    height={25}
+                    onChange={this.toggleAddToDiscoverButton}
+                    checked={addToDiscover}
+                  />
+                </label>
+              </AddToDiscover>
+            ) : null
           ) : null}
         </LeftSection>
         {!hasMoreThan100Tracks ? (
