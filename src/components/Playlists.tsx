@@ -64,8 +64,8 @@ class Playlists extends React.Component<any, any> {
             >
               <PlaylistImage
                 src={
-                  playlist.images && playlist.images[0].hasOwnProperty("url")
-                    ? playlist.images[0].url
+                  playlist.images && playlist.images.length
+                    ? playlist.images[0]["url"] || ""
                     : ""
                 }
               />
